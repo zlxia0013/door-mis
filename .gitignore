@@ -1,0 +1,10 @@
+target/
+.idea/
+
+## File-based project format:
+*.iws
+*.iml
+*.ipr
+
+# mpeltonen/sbt-idea plugin
+.idea_modules/

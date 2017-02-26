@@ -17,18 +17,18 @@
     <bean id="configurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>file:${JIAZB_CONFIG_HOME}/spring-common.properties</value>
+				<value>classpath:database.properties</value>
 			</list>
 		</property>
 	</bean>
     
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-		<property name="driverClassName" 		value="${db.main.driverClassName}"/>
-		<property name="url" 					value="${db.main.url}"/>
-		<property name="username" 				value="${db.main.username}"/>
-		<property name="password" 				value="${db.main.password}"/>
-		<property name="maxActive" 				value="${db.main.maxActive}"/>
-		<property name="maxIdle" 				value="${db.main.maxIdle}"/>
+		<property name="driverClassName" 		value="${db.driverClassName}"/>
+		<property name="url" 					value="${db.url}"/>
+		<property name="username" 				value="${db.username}"/>
+		<property name="password" 				value="${db.password}"/>
+		<property name="maxActive" 				value="${db.maxActive}"/>
+		<property name="maxIdle" 				value="${db.maxIdle}"/>
 		<property name="validationQuery" 		value="SELECT 1"/>
 		<property name="testOnBorrow" 			value="true"/>
 		<property name="testOnReturn" 			value="false"/>

@@ -1,11 +1,11 @@
 package com.jack.doormis.common.web;
 
-import java.security.Key;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jack.doormis.core.user.pojo.User;
 import org.apache.log4j.Logger;
 
 import org.springframework.web.servlet.ModelAndView;
@@ -20,7 +20,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
     protected Logger				log	= Logger.getLogger(this.getClass());
 
     public static final String LAST_PAGE = "com.alibaba.lastPage";
-    protected SysUser userInfo = null;
+    protected User userInfo = null;
     protected Map<String, String> userAllTrans = null;  // 用户所有权限
 
 	/*
@@ -58,7 +58,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
         log.info("contextPath:"+contextPath);
         log.info("url:"+url);
 
-        userInfo = (SysUser) request.getSession().getAttribute(Keys.SESSION_USER);
+        userInfo = (User) request.getSession().getAttribute(Keys.SESSION_USER);
         if (userInfo != null) {
             // 添加权限控制，判断当前用户是否有此操作权限
             if(!checkTrans(url, userAllTrans)){

@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.jack.doormis.core.user.pojo.User;
+import com.jack.doormis.interfaces.http.CommonController;
 import org.apache.log4j.Logger;
 
 import org.springframework.web.servlet.ModelAndView;
@@ -18,9 +19,6 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 public class CommonInterceptor extends HandlerInterceptorAdapter{
     protected Logger				log	= Logger.getLogger(this.getClass());
-
-    public static final String LAST_PAGE = "com.alibaba.lastPage";
-    protected User userInfo = null;
     protected Map<String, String> userAllTrans = null;  // 用户所有权限
 
 	/*
@@ -49,7 +47,6 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
     @SuppressWarnings("unchecked")
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response, Object handler) throws Exception {
-        log.info("==============执行顺序: 1、preHandle================");
         String requestUri = request.getRequestURI();
         String contextPath = request.getContextPath();
         String url = requestUri.substring(contextPath.length());
@@ -58,17 +55,21 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
         log.info("contextPath:"+contextPath);
         log.info("url:"+url);
 
-        userInfo = (User) request.getSession().getAttribute(Keys.SESSION_USER);
+        if (CommonController.URL_GOTO_LOGIN_PAGE.equals(url)){
+            return true;
+        }
+
+        User userInfo = (User) request.getSession().getAttribute(Keys.SESSION_USER);
         if (userInfo != null) {
             // 添加权限控制，判断当前用户是否有此操作权限
             if(!checkTrans(url, userAllTrans)){
-                request.getRequestDispatcher("/error/no_access.jsp").forward(request, response);
+                request.getRequestDispatcher("/error/no_access.html").forward(request, response);
                 return false;
             }
             return true;
         }else {
             log.info("Interceptor：跳转到login页面！");
-            request.getRequestDispatcher("/jsp/login.jsp").forward(request, response);
+            request.getRequestDispatcher(CommonController.URL_GOTO_LOGIN_PAGE).forward(request, response);
             return false;
         }
     }

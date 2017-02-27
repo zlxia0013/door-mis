@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.doormis.core.client.dao.ClientDao">
+	<resultMap id="BaseResultMap" type="com.jack.doormis.core.client.pojo.Client">
+		<result column="id" jdbcType="INTEGER" property="id" />
+		<result column="ver_nbr" jdbcType="INTEGER" property="verNbr" />
+		<result column="real_name" jdbcType="VARCHAR" property="realName" />
+		<result column="code" jdbcType="VARCHAR" property="code" />
+		<result column="phone" jdbcType="VARCHAR" property="phone" />
+		<result column="address" jdbcType="VARCHAR" property="address" />
+		<result column="wechat" jdbcType="VARCHAR" property="wechat" />
+		<result column="logistics" jdbcType="VARCHAR" property="logistics" />
+		<result column="remark" jdbcType="VARCHAR" property="remark" />
+		<result column="add_user_id" jdbcType="INTEGER" property="addUserId" />
+		<result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
+		<result column="soft_del" jdbcType="INTEGER" property="softDel" />
+		<result column="del_user_id" jdbcType="INTEGER" property="delUserId" />
+		<result column="del_time" jdbcType="TIMESTAMP" property="delTime" />
+	</resultMap>
+
+	<sql id="Base_Column_List" >
+		 t.id as id,
+		 t.ver_nbr as verNbr,
+		 t.real_name as realName,
+		 t.code as code,
+		 t.phone as phone,
+		 t.address as address,
+		 t.wechat as wechat,
+		 t.logistics as logistics,
+		 t.remark as remark,
+		 t.add_user_id as addUserId,
+		 t.add_time as addTime,
+		 t.soft_del as softDel,
+		 t.del_user_id as delUserId,
+		 t.del_time as delTime
+	</sql>
+
+	<select id="getById" parameterType="java.lang.Integer" resultType="com.jack.doormis.core.client.pojo.Client">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		t_client t
+		WHERE
+		t.id = #{id,jdbcType=INTEGER}
+	</select>
+
+	<select id="search" parameterType="com.jack.doormis.core.client.pojo.Client" 
+		resultType="com.jack.doormis.core.client.pojo.Client">
+		SELECT 
+	 		<include refid="Base_Column_List" />
+	    FROM 
+			t_client t 
+		WHERE 1=1 
+	</select>
+
+	<select id="searchPaged" parameterType="com.jack.doormis.core.client.pojo.Client" 
+		resultType="com.jack.doormis.core.client.pojo.Client">
+		SELECT 
+	 		<include refid="Base_Column_List" />
+	    FROM 
+			t_client t 
+		WHERE 1=1 
+	</select>
+
+	<select id="searchCnt" parameterType="com.jack.doormis.core.client.pojo.Client" 
+		resultType="java.lang.Integer">
+		SELECT 
+	 		count(1) 
+	    FROM 
+			t_client t 
+		WHERE 1=1 
+	</select>
+
+	<insert id="add" parameterType="com.jack.doormis.core.client.pojo.Client"
+		useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_client 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="verNbr != null" >ver_nbr,</if>
+			<if test="realName != null" >real_name,</if>
+			<if test="code != null" >code,</if>
+			<if test="phone != null" >phone,</if>
+			<if test="address != null" >address,</if>
+			<if test="wechat != null" >wechat,</if>
+			<if test="logistics != null" >logistics,</if>
+			<if test="remark != null" >remark,</if>
+			<if test="addUserId != null" >add_user_id,</if>
+			<if test="addTime != null" >add_time,</if>
+			<if test="softDel != null" >soft_del,</if>
+			<if test="delUserId != null" >del_user_id,</if>
+			<if test="delTime != null" >del_time,</if>              	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+          	<if test="verNbr != null" >#{verNbr:INTEGER},</if>
+          	<if test="realName != null" >#{realName:VARCHAR},</if>
+          	<if test="code != null" >#{code:VARCHAR},</if>
+          	<if test="phone != null" >#{phone:VARCHAR},</if>
+          	<if test="address != null" >#{address:VARCHAR},</if>
+          	<if test="wechat != null" >#{wechat:VARCHAR},</if>
+          	<if test="logistics != null" >#{logistics:VARCHAR},</if>
+          	<if test="remark != null" >#{remark:VARCHAR},</if>
+          	<if test="addUserId != null" >#{addUserId:INTEGER},</if>
+          	<if test="addTime != null" >#{addTime:TIMESTAMP},</if>
+          	<if test="softDel != null" >#{softDel:INTEGER},</if>
+          	<if test="delUserId != null" >#{delUserId:INTEGER},</if>
+          	<if test="delTime != null" >#{delTime:TIMESTAMP},</if> 
+        </trim>
+	</insert>
+
+	<update id="update" parameterType="com.jack.doormis.core.client.pojo.Client">
+		UPDATE
+	 		t_client
+		<set> 
+	        <if test="verNbr != null" >ver_nbr = #{verNbr:INTEGER},</if>
+	        <if test="realName != null" >real_name = #{realName:VARCHAR},</if>
+	        <if test="code != null" >code = #{code:VARCHAR},</if>
+	        <if test="phone != null" >phone = #{phone:VARCHAR},</if>
+	        <if test="address != null" >address = #{address:VARCHAR},</if>
+	        <if test="wechat != null" >wechat = #{wechat:VARCHAR},</if>
+	        <if test="logistics != null" >logistics = #{logistics:VARCHAR},</if>
+	        <if test="remark != null" >remark = #{remark:VARCHAR},</if>
+	        <if test="addUserId != null" >add_user_id = #{addUserId:INTEGER},</if>
+	        <if test="addTime != null" >add_time = #{addTime:TIMESTAMP},</if>
+	        <if test="softDel != null" >soft_del = #{softDel:INTEGER},</if>
+	        <if test="delUserId != null" >del_user_id = #{delUserId:INTEGER},</if>
+	        <if test="delTime != null" >del_time = #{delTime:TIMESTAMP},</if>
+	    </set>
+	   	WHERE 
+	        id = #{id,jdbcType=INTEGER}
+	</update>
+
+	<delete id="delete" parameterType="com.jack.doormis.core.client.pojo.Client">
+		DELETE FROM 
+			t_client
+	    WHERE 
+	        id = #{id,jdbcType=INTEGER}
+	</delete>
+	
+</mapper>

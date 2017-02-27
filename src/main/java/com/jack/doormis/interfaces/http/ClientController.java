@@ -2,13 +2,12 @@ package com.jack.doormis.interfaces.http;
 
 
 import com.jack.doormis.common.web.Json;
-import com.jack.doormis.core.user.bo.UserBo;
-import com.jack.doormis.core.user.pojo.User;
+import com.jack.doormis.core.client.bo.ClientBo;
+import com.jack.doormis.core.client.pojo.Client;
 import com.jack.doormis.util.ReturnCodes;
 import com.jack.doormis.util.exception.DoorMisRuntimeException;
 import com.jack.doormis.util.exception.DoorMisSystemException;
 import org.apache.log4j.Logger;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -17,12 +16,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping(value = "/user")
-public class UserController {
+@RequestMapping(value = "/client")
+public class ClientController {
 	protected Logger				log	= Logger.getLogger(this.getClass());
 	
 	@Autowired
-	private UserBo userBo;
+	private ClientBo clientBo;
 	
 	/**
 	 * 跳转到表格页面
@@ -30,7 +29,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/list",method = RequestMethod.GET)
     public String list(Model model) {
-        return "/WEB-INF/jsp/user/user_list.jsp";
+        return "/WEB-INF/jsp/client/client_list.jsp";
     }
 	
 	/**
@@ -39,10 +38,10 @@ public class UserController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/add",method = RequestMethod.POST)
-    public Json add(User user) {
+    public Json add(Client client) {
         Json json = new Json();
         try {
-            userBo.add(user);
+            clientBo.add(client);
             json.setSuccess(true);
         } catch (DoorMisRuntimeException e) {
             json = new Json(e.getErrorCode(), e.getMessage());
@@ -59,15 +58,15 @@ public class UserController {
 	/**
      * 修改
      * 
-     * @param user
+     * @param client
      * @return
      */
 	@ResponseBody
     @RequestMapping(value = "/update",method = RequestMethod.POST)
-    public Json update(User user) {
+    public Json update(Client client) {
         Json json = new Json();
         try {
-        	userBo.update(user);
+            clientBo.update(client);
             json.setSuccess(true);
         } catch (DoorMisRuntimeException e) {
             json = new Json(e.getErrorCode(), e.getMessage());

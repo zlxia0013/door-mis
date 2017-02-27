@@ -13,7 +13,7 @@ public class CommonController {
 
 	@RequestMapping(value = URL_GOTO_LOGIN_PAGE)
     public String gotoLoginPage(Model model) {
-        return "/WEB-INF/jsp/common/login.jsp";
+        return "/common/login";
     }
 
 }

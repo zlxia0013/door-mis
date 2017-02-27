@@ -29,7 +29,7 @@ public class ClientQueryController {
 	 */
 	@RequestMapping(value = "/list",method = RequestMethod.GET)
     public String list(Model model) {
-        return "/WEB-INF/jsp/client_query/client_query_list.jsp";
+        return "/client_query/client_query_list";
     }
 	
 	/**

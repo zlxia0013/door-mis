@@ -30,7 +30,7 @@ public class UserController {
 	 */
 	@RequestMapping(value = "/list",method = RequestMethod.GET)
     public String list(Model model) {
-        return "/WEB-INF/jsp/user/user_list.jsp";
+        return "/user/user_list";
     }
 	
 	/**

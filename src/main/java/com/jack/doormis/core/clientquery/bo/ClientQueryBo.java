@@ -3,6 +3,7 @@ package com.jack.doormis.core.clientquery.bo;
 
 import com.jack.doormis.core.clientquery.dao.ClientQueryDao;
 import com.jack.doormis.core.clientquery.pojo.ClientQuery;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,6 +11,7 @@ import java.util.List;
 
 @Service
 public class ClientQueryBo  {
+	@Autowired
 	private ClientQueryDao clientQueryDao;
 
 

@@ -26,13 +26,17 @@
     </header>
     <div class="signin">
         <div class="signin-head"><img src="${path}/img/test/head_120.png" alt="" class="img-circle"></div>
-        <form class="form-signin" role="form">
+        <form class="form-signin">
             <input id="txtUserName" type="text" class="form-control" placeholder="用户名" required autofocus />
             <input id="txtPassword" type="password" class="form-control" placeholder="密码" required />
-            <button class="btn btn-lg btn-warning btn-block" onclick="login()">登录</button>
+            <input type="button" class="btn btn-lg btn-warning btn-block"  onclick="login()" value="登录"></input>
         </form>
     </div>
 </div>
+
+
+<script type="text/javascript" src="${path}/js/jquery.js"></script>
+<script type="text/javascript" src="${path}/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
     function login(){
@@ -56,7 +60,6 @@
                 password:password
             },
             success:function(result){
-                alert(result);
                 var re = JSON.parse(result);
                 if(re.returnCode=="0"){
                     location.reload();
@@ -68,11 +71,10 @@
                 alert(request);  //登录错误提示信息
             }
         });
+
+        return false;
     }
 </script>
-
-<script type="text/javascript" src="${path}/js/jquery.js"></script>
-<script type="text/javascript" src="${path}/js/bootstrap.min.js"></script>
 
 </body>
 </html>

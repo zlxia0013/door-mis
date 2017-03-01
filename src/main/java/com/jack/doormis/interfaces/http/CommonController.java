@@ -44,10 +44,10 @@ public class CommonController {
             json = new Json(e.getErrorCode(), e.getMessage());
         } catch (DoorMisSystemException e) {
             log.error("error", e);
-            json = new Json(e.getErrorCode(), "系统忙... " + e.getMessage());
+            json = new Json(e.getErrorCode(), "系统忙... ");
         } catch (Throwable e) {
             log.error("error", e);
-            json = new Json(ReturnCodes.SYSTEM_EXCEPTION, "系统忙... " + e.getMessage());
+            json = new Json(ReturnCodes.SYSTEM_EXCEPTION, "系统忙... ");
         }
 
         return json;

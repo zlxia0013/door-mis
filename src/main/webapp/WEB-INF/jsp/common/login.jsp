@@ -27,12 +27,52 @@
     <div class="signin">
         <div class="signin-head"><img src="${path}/img/test/head_120.png" alt="" class="img-circle"></div>
         <form class="form-signin" role="form">
-            <input type="text" class="form-control" placeholder="用户名" required autofocus />
-            <input type="password" class="form-control" placeholder="密码" required />
-            <button class="btn btn-lg btn-warning btn-block" type="submit">登录</button>
+            <input id="txtUserName" type="text" class="form-control" placeholder="用户名" required autofocus />
+            <input id="txtPassword" type="password" class="form-control" placeholder="密码" required />
+            <button class="btn btn-lg btn-warning btn-block" onclick="login()">登录</button>
         </form>
     </div>
 </div>
+
+<script type="text/javascript">
+    function login(){
+        var userName = $("#txtUserName").val();
+        if(userName == ""){
+            alert("请输入用户名");
+            return;
+        }
+
+        var password = $("#txtPassword").val();
+        if(password == ""){
+            alert("请输入密码");
+            return;
+        }
+
+        $.ajax({
+            url:"${path}/login",
+            type:"post",
+            data:{
+                userName:userName,
+                password:password
+            },
+            success:function(result){
+                alert(result);
+                var re = JSON.parse(result);
+                if(re.returnCode=="0"){
+                    location.reload();
+                }else{
+                    alert(re.msg);
+                }
+            },
+            error:function(request) {      // 设置表单提交出错
+                alert(request);  //登录错误提示信息
+            }
+        });
+    }
+</script>
+
+<script type="text/javascript" src="${path}/js/jquery.js"></script>
+<script type="text/javascript" src="${path}/js/bootstrap.min.js"></script>
 
 </body>
 </html>

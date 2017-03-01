@@ -55,7 +55,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
         log.info("contextPath:"+contextPath);
         log.info("url:"+url);
 
-        if (CommonController.URL_GOTO_LOGIN_PAGE.equals(url)){
+        if (CommonController.URL_GOTO_LOGIN_PAGE.equals(url) || CommonController.URL_LOGIN.equals(url)){
             return true;
         }
 

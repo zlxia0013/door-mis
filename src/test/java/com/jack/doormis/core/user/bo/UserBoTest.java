@@ -1,6 +1,7 @@
 package com.jack.doormis.core.user.bo;
 
 
+import com.jack.doormis.core.user.pojo.User;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,7 @@ public class UserBoTest {
 
     @Test
     public void testHello() {
-        userBo.login("admin", "aa");
+        User user = userBo.login("admin", "aa");
+
     }
 }

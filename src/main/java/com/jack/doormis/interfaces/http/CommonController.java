@@ -1,7 +1,9 @@
 package com.jack.doormis.interfaces.http;
 
 import com.jack.doormis.common.web.Json;
+import com.jack.doormis.common.web.Keys;
 import com.jack.doormis.core.user.bo.UserBo;
+import com.jack.doormis.core.user.pojo.User;
 import com.jack.doormis.util.ReturnCodes;
 import com.jack.doormis.util.exception.DoorMisRuntimeException;
 import com.jack.doormis.util.exception.DoorMisSystemException;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 @Controller
@@ -36,10 +39,11 @@ public class CommonController {
 
     @RequestMapping(value = URL_LOGIN, method = RequestMethod.POST)
     @ResponseBody
-    public Json login(String userName, String password) {
+    public Json login(String userName, String password,HttpSession session) {
         Json json = new Json(true);
         try {
-            userBo.login(userName, password);
+            User user = userBo.login(userName, password);
+            session.setAttribute(Keys.SESSION_USER, user);
         }catch (DoorMisRuntimeException e) {
             json = new Json(e.getErrorCode(), e.getMessage());
         } catch (DoorMisSystemException e) {

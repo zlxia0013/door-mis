@@ -9,7 +9,7 @@ import java.util.List;
 public interface UserDao  {
 	public User getById(@Param("id") int id);
 
-	public User getByLoginName(@Param("userName") String userName);
+	public User getByUserName(String userName);
 
 	public List<User> search(User user);
 

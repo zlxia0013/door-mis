@@ -27,9 +27,9 @@ public class ClientController {
 	 * 跳转到表格页面
 	 * @return
 	 */
-	@RequestMapping(value = "/list",method = RequestMethod.GET)
+	@RequestMapping(value = "/goto_main_page",method = RequestMethod.GET)
     public String list(Model model) {
-        return "/client/client_list";
+        return "/client/client_main";
     }
 	
 	/**

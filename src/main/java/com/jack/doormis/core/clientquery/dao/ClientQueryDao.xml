@@ -1,13 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jack.doormis.core.clientquery.dao.ClientQueryDao">
-	<resultMap id="BaseResultMap" type="com.jack.doormis.core.clientquery.pojo.ClientQuery">
-		<result column="id" jdbcType="INTEGER" property="id" />
-		<result column="client_id" jdbcType="INTEGER" property="clientId" />
-		<result column="user_id" jdbcType="INTEGER" property="userId" />
-		<result column="query_time" jdbcType="TIMESTAMP" property="queryTime" />
-	</resultMap>
-
 	<sql id="Base_Column_List" >
 		 t.id as id,
 		 t.client_id as clientId,
@@ -15,18 +8,16 @@
 		 t.query_time as queryTime
 	</sql>
 
-	<select id="getById" parameterType="java.lang.Integer"
-			resultType="com.jack.doormis.core.clientquery.pojo.ClientQuery">
+	<select id="getById" parameterType="java.lang.Integer" resultType="com.jack.doormis.core.clientquery.pojo.ClientQuery">
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM
 		t_client_query t
 		WHERE
-		t.id = #{id,jdbcType=INTEGER}
+		t.id = #{id}
 	</select>
 
-	<select id="search" parameterType="com.jack.doormis.core.clientquery.pojo.ClientQuery" 
-		resultType="com.jack.doormis.core.clientquery.pojo.ClientQuery">
+	<select id="search" parameterType="com.jack.doormis.core.clientquery.pojo.ClientQuery" resultType="com.jack.doormis.core.clientquery.pojo.ClientQuery">
 		SELECT 
 	 		<include refid="Base_Column_List" />
 	    FROM 
@@ -43,8 +34,7 @@
 		WHERE 1=1 
 	</select>
 
-	<select id="searchCnt" parameterType="com.jack.doormis.core.clientquery.pojo.ClientQuery" 
-		resultType="java.lang.Integer">
+	<select id="searchCnt" parameterType="com.jack.doormis.core.clientquery.pojo.ClientQuery" resultType="java.lang.Integer">
 		SELECT 
 	 		count(1) 
 	    FROM 
@@ -52,8 +42,7 @@
 		WHERE 1=1 
 	</select>
 
-	<insert id="add" parameterType="com.jack.doormis.core.clientquery.pojo.ClientQuery"
-		useGeneratedKeys="true" keyProperty="id">
+	<insert id="add" parameterType="com.jack.doormis.core.clientquery.pojo.ClientQuery" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO t_client_query 
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="clientId != null" >client_id,</if>
@@ -61,9 +50,9 @@
 			<if test="queryTime != null" >query_time,</if>              	
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides="," >
-          	<if test="clientId != null" >#{clientId:INTEGER},</if>
-          	<if test="userId != null" >#{userId:INTEGER},</if>
-          	<if test="queryTime != null" >#{queryTime:TIMESTAMP},</if> 
+          	<if test="clientId != null" >#{clientId},</if>
+          	<if test="userId != null" >#{userId},</if>
+          	<if test="queryTime != null" >#{queryTime},</if> 
         </trim>
 	</insert>
 
@@ -71,19 +60,19 @@
 		UPDATE
 	 		t_client_query
 		<set> 
-	        <if test="clientId != null" >client_id = #{clientId:INTEGER},</if>
-	        <if test="userId != null" >user_id = #{userId:INTEGER},</if>
-	        <if test="queryTime != null" >query_time = #{queryTime:TIMESTAMP},</if>
+	        <if test="clientId != null" >client_id = #{clientId},</if>
+	        <if test="userId != null" >user_id = #{userId},</if>
+	        <if test="queryTime != null" >query_time = #{queryTime},</if>
 	    </set>
 	   	WHERE 
-	        id = #{id,jdbcType=INTEGER}
+	        id = #{id}
 	</update>
 
 	<delete id="delete" parameterType="com.jack.doormis.core.clientquery.pojo.ClientQuery">
 		DELETE FROM 
 			t_client_query
 	    WHERE 
-	        id = #{id,jdbcType=INTEGER}
+	        id = #{id}
 	</delete>
 	
 </mapper>

@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jack.doormis.core.authority.dao.AuthorityDao">	
+	<sql id="Base_Column_List" >
+		 t.name as name,
+		 t.value as value,
+		 t.for_all as forAll,
+		 t.comments as comments
+	</sql>
+	
+	<select id="getById" parameterType="java.lang.Integer" resultType="com.jack.doormis.core.authority.pojo.Authority">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		t_authority t
+		WHERE
+		t.id = #{id}
+	</select>
+	
+	<select id="search" parameterType="com.jack.doormis.core.authority.pojo.Authority" resultType="com.jack.doormis.core.authority.pojo.Authority">
+		SELECT 
+	 		<include refid="Base_Column_List" />
+	    FROM 
+			t_authority t 
+		WHERE 1=1 
+	</select>
+	
+	<select id="searchPaged" parameterType="com.jack.doormis.core.authority.pojo.Authority" resultType="com.jack.doormis.core.authority.pojo.Authority">
+		SELECT 
+	 		<include refid="Base_Column_List" />
+	    FROM 
+			t_authority t 
+		WHERE 1=1 
+	</select>
+	
+	<select id="searchCnt" parameterType="com.jack.doormis.core.authority.pojo.Authority" resultType="java.lang.Integer">
+		SELECT 
+	 		count(1) 
+	    FROM 
+			t_authority t 
+		WHERE 1=1 
+	</select>
+	
+	<insert id="add" parameterType="com.jack.doormis.core.authority.pojo.Authority" useGeneratedKeys="true" keyProperty="id">
+		INSERT INTO t_authority 
+		<trim prefix="(" suffix=")" suffixOverrides="," >
+			<if test="name != null" >name,</if>
+			<if test="value != null" >value,</if>
+			<if test="forAll != null" >for_all,</if>
+			<if test="comments != null" >comments,</if>              	
+		</trim>
+		<trim prefix="values (" suffix=")" suffixOverrides="," >
+          	<if test="name != null" >#{name},</if>
+          	<if test="value != null" >#{value},</if>
+          	<if test="forAll != null" >#{forAll},</if>
+          	<if test="comments != null" >#{comments},</if> 
+        </trim>
+	</insert>
+	
+	<update id="update" parameterType="com.jack.doormis.core.authority.pojo.Authority">
+		UPDATE
+	 		t_authority
+		<set> 
+	        <if test="name != null" >name = #{name},</if>
+	        <if test="value != null" >value = #{value},</if>
+	        <if test="forAll != null" >for_all = #{forAll},</if>
+	        <if test="comments != null" >comments = #{comments},</if>
+	    </set>
+	   	WHERE 
+	        id = #{id}
+	</update>
+	
+	<delete id="delete" parameterType="com.jack.doormis.core.authority.pojo.Authority">
+		DELETE FROM 
+			t_authority
+	    WHERE 
+	        id = #{id}
+	</delete>
+	
+</mapper>

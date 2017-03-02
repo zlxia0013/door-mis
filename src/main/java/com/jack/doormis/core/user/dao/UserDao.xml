@@ -1,26 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jack.doormis.core.user.dao.UserDao">
-	<resultMap id="BaseResultMap" type="com.jack.doormis.core.user.pojo.User">
-		<result column="id" jdbcType="INTEGER" property="id" />
-		<result column="ver_nbr" jdbcType="INTEGER" property="verNbr" />
-		<result column="login_name" jdbcType="VARCHAR" property="loginName" />
-		<result column="pwd" jdbcType="VARCHAR" property="pwd" />
-		<result column="role" jdbcType="VARCHAR" property="role" />
-		<result column="phone" jdbcType="VARCHAR" property="phone" />
-		<result column="real_name" jdbcType="VARCHAR" property="realName" />
-		<result column="state_id" jdbcType="INTEGER" property="stateId" />
-		<result column="add_user_id" jdbcType="INTEGER" property="addUserId" />
-		<result column="add_time" jdbcType="TIMESTAMP" property="addTime" />
-		<result column="remark" jdbcType="VARCHAR" property="remark" />
-		<result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime" />
-		<result column="last_access_time" jdbcType="TIMESTAMP" property="lastAccessTime" />
-	</resultMap>
-
 	<sql id="Base_Column_List" >
 		 t.id as id,
 		 t.ver_nbr as verNbr,
-		 t.login_name as loginName,
+		 t.user_name as userName,
 		 t.pwd as pwd,
 		 t.role as role,
 		 t.phone as phone,
@@ -39,16 +23,16 @@
 		FROM
 		t_user t
 		WHERE
-		t.id = #{id,jdbcType=INTEGER}
+		t.id = #{id}
 	</select>
 
-	<select id="getByLoginName" parameterType="java.lang.String" resultType="com.jack.doormis.core.user.pojo.User">
+	<select id="getByUserName" parameterType="java.lang.String" resultType="com.jack.doormis.core.user.pojo.User">
 		SELECT
 		<include refid="Base_Column_List" />
 		FROM
 		t_user t
 		WHERE
-		t.login_name = #{loginName,jdbcType=VARCHAR}
+		t.user_name = #{userName}
 	</select>
 
 	<select id="search" parameterType="com.jack.doormis.core.user.pojo.User" resultType="com.jack.doormis.core.user.pojo.User">
@@ -79,7 +63,7 @@
 		INSERT INTO t_user 
 		<trim prefix="(" suffix=")" suffixOverrides="," >
 			<if test="verNbr != null" >ver_nbr,</if>
-			<if test="loginName != null" >login_name,</if>
+			<if test="userName != null" >user_name,</if>
 			<if test="pwd != null" >pwd,</if>
 			<if test="role != null" >role,</if>
 			<if test="phone != null" >phone,</if>
@@ -92,18 +76,18 @@
 			<if test="lastAccessTime != null" >last_access_time,</if>              	
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides="," >
-          	<if test="verNbr != null" >#{verNbr:INTEGER},</if>
-          	<if test="loginName != null" >#{loginName:VARCHAR},</if>
-          	<if test="pwd != null" >#{pwd:VARCHAR},</if>
-          	<if test="role != null" >#{role:VARCHAR},</if>
-          	<if test="phone != null" >#{phone:VARCHAR},</if>
-          	<if test="realName != null" >#{realName:VARCHAR},</if>
-          	<if test="stateId != null" >#{stateId:INTEGER},</if>
-          	<if test="addUserId != null" >#{addUserId:INTEGER},</if>
-          	<if test="addTime != null" >#{addTime:TIMESTAMP},</if>
-          	<if test="remark != null" >#{remark:VARCHAR},</if>
-          	<if test="lastLoginTime != null" >#{lastLoginTime:TIMESTAMP},</if>
-          	<if test="lastAccessTime != null" >#{lastAccessTime:TIMESTAMP},</if> 
+          	<if test="verNbr != null" >#{verNbr},</if>
+          	<if test="userName != null" >#{userName},</if>
+          	<if test="pwd != null" >#{pwd},</if>
+          	<if test="role != null" >#{role},</if>
+          	<if test="phone != null" >#{phone},</if>
+          	<if test="realName != null" >#{realName},</if>
+          	<if test="stateId != null" >#{stateId},</if>
+          	<if test="addUserId != null" >#{addUserId},</if>
+          	<if test="addTime != null" >#{addTime},</if>
+          	<if test="remark != null" >#{remark},</if>
+          	<if test="lastLoginTime != null" >#{lastLoginTime},</if>
+          	<if test="lastAccessTime != null" >#{lastAccessTime},</if> 
         </trim>
 	</insert>
 
@@ -111,28 +95,28 @@
 		UPDATE
 	 		t_user
 		<set> 
-	        <if test="verNbr != null" >ver_nbr = #{verNbr:INTEGER},</if>
-	        <if test="loginName != null" >login_name = #{loginName:VARCHAR},</if>
-	        <if test="pwd != null" >pwd = #{pwd:VARCHAR},</if>
-	        <if test="role != null" >role = #{role:VARCHAR},</if>
-	        <if test="phone != null" >phone = #{phone:VARCHAR},</if>
-	        <if test="realName != null" >real_name = #{realName:VARCHAR},</if>
-	        <if test="stateId != null" >state_id = #{stateId:INTEGER},</if>
-	        <if test="addUserId != null" >add_user_id = #{addUserId:INTEGER},</if>
-	        <if test="addTime != null" >add_time = #{addTime:TIMESTAMP},</if>
-	        <if test="remark != null" >remark = #{remark:VARCHAR},</if>
-	        <if test="lastLoginTime != null" >last_login_time = #{lastLoginTime:TIMESTAMP},</if>
-	        <if test="lastAccessTime != null" >last_access_time = #{lastAccessTime:TIMESTAMP},</if>
+	        <if test="verNbr != null" >ver_nbr = #{verNbr},</if>
+	        <if test="userName != null" >user_name = #{userName},</if>
+	        <if test="pwd != null" >pwd = #{pwd},</if>
+	        <if test="role != null" >role = #{role},</if>
+	        <if test="phone != null" >phone = #{phone},</if>
+	        <if test="realName != null" >real_name = #{realName},</if>
+	        <if test="stateId != null" >state_id = #{stateId},</if>
+	        <if test="addUserId != null" >add_user_id = #{addUserId},</if>
+	        <if test="addTime != null" >add_time = #{addTime},</if>
+	        <if test="remark != null" >remark = #{remark},</if>
+	        <if test="lastLoginTime != null" >last_login_time = #{lastLoginTime},</if>
+	        <if test="lastAccessTime != null" >last_access_time = #{lastAccessTime},</if>
 	    </set>
 	   	WHERE 
-	        id = #{id,jdbcType=INTEGER}
+	        id = #{id}
 	</update>
 
 	<delete id="delete" parameterType="com.jack.doormis.core.user.pojo.User">
 		DELETE FROM 
 			t_user
 	    WHERE 
-	        id = #{id,jdbcType=INTEGER}
+	        id = #{id}
 	</delete>
 	
 </mapper>

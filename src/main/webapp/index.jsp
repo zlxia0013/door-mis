@@ -4,7 +4,7 @@
         <%
             String path = request.getContextPath();
             path = "/".equals(path)?"":path;
-            response.sendRedirect(path + "/client/list");
+            response.sendRedirect(path + "/client/goto_main_page");
         %>
     </head>
     <body>

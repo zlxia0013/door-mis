@@ -76,5 +76,25 @@
 	    WHERE 
 	        id = #{id}
 	</delete>
-	
+
+	<select id="searchForAllAuthorities" resultType="com.jack.doormis.core.authority.pojo.Authority">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM
+			t_authority t
+		WHERE
+			for_all=1
+	</select>
+
+	<select id="searchAuthoritiesOfRole" parameterType="String" resultType="com.jack.doormis.core.authority.pojo.Authority">
+		SELECT
+			<include refid="Base_Column_List" />
+		FROM
+			t_authority t
+				LEFT JOIN t_role_authority t1 ON t1.authority=t.name
+		WHERE
+			t.for_all=0
+			AND t1.role=#{role}
+	</select>
+
 </mapper>

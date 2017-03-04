@@ -20,4 +20,8 @@ public interface AuthorityDao {
     public void update(Authority authority);
 
     public void delete(Authority authority);
+
+    List<Authority> searchForAllAuthorities();
+
+    List<Authority> searchAuthoritiesOfRole(String role);
 }

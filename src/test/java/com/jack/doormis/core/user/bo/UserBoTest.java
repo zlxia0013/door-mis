@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
+import java.util.List;
+
 /**
  * Created by Jack on 2017/3/1.
  */
@@ -21,6 +23,11 @@ public class UserBoTest {
     @Test
     public void testHello() {
         User user = userBo.login("admin", "aa");
+    }
 
+    @Test
+    public void searchAllRoles() {
+        List<String> roles = userBo.searchAllRoles();
+        System.out.print(roles.size());
     }
 }

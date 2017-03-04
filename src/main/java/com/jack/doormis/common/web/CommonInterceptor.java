@@ -5,10 +5,13 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.jack.doormis.core.authority.CheckAuthorityResultEnum;
+import com.jack.doormis.core.authority.bo.AuthorityBo;
 import com.jack.doormis.core.user.pojo.User;
 import com.jack.doormis.interfaces.http.CommonController;
 import org.apache.log4j.Logger;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
@@ -17,12 +20,14 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
  * Created by Jack on 2017/2/26.
  */
 
-public class CommonInterceptor extends HandlerInterceptorAdapter{
-    protected Logger				log	= Logger.getLogger(this.getClass());
-    protected Map<String, String> userAllTrans = null;  // 用户所有权限
+public class CommonInterceptor extends HandlerInterceptorAdapter {
+    protected Logger log = Logger.getLogger(this.getClass());
+
+    @Autowired
+    private AuthorityBo authorityBo;
 
 	/*
-	 * 利用正则映射到需要拦截的路径
+     * 利用正则映射到需要拦截的路径
 
     private String mappingURL;
 
@@ -34,14 +39,14 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
     /**
      * 在业务处理器处理请求之前被调用
      * 如果返回false
-     *     从当前的拦截器往回执行所有拦截器的afterCompletion(),再退出拦截器链
-     *
+     * 从当前的拦截器往回执行所有拦截器的afterCompletion(),再退出拦截器链
+     * <p>
      * 如果返回true
-     *    执行下一个拦截器,直到所有的拦截器都执行完毕
-     *    再执行被拦截的Controller
-     *    然后进入拦截器链,
-     *    从最后一个拦截器往回执行所有的postHandle()
-     *    接着再从最后一个拦截器往回执行所有的afterCompletion()
+     * 执行下一个拦截器,直到所有的拦截器都执行完毕
+     * 再执行被拦截的Controller
+     * 然后进入拦截器链,
+     * 从最后一个拦截器往回执行所有的postHandle()
+     * 接着再从最后一个拦截器往回执行所有的afterCompletion()
      */
     @Override
     @SuppressWarnings("unchecked")
@@ -51,38 +56,57 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
         String contextPath = request.getContextPath();
         String url = requestUri.substring(contextPath.length());
 
-        log.info("requestUri:"+requestUri);
-        log.info("contextPath:"+contextPath);
-        log.info("url:"+url);
-
-        if (CommonController.URL_GOTO_LOGIN_PAGE.equals(url) || CommonController.URL_LOGIN.equals(url)){
-            return true;
-        }
+        log.info("requestUri:" + requestUri);
+        log.info("contextPath:" + contextPath);
+        log.info("url:" + url);
 
         User userInfo = (User) request.getSession().getAttribute(Keys.SESSION_USER);
-        if (userInfo != null) {
-            // 添加权限控制，判断当前用户是否有此操作权限
-            if(!checkTrans(url, userAllTrans)){
+
+        boolean rtn = false;
+        CheckAuthorityResultEnum result = authorityBo.checkAuthority(userInfo, url);
+        switch (result) {
+            case RETURN_TRUE:
+                rtn = true;
+                break;
+            case NEED_LOGIN:
+                request.getRequestDispatcher(CommonController.URL_GOTO_LOGIN_PAGE).forward(request, response);
+                rtn = false;
+                break;
+            case NO_AUTHORITY:
                 request.getRequestDispatcher("/error/no_access.html").forward(request, response);
-                return false;
-            }
-            return true;
-        }else {
-            log.info("Interceptor：跳转到login页面！");
-            request.getRequestDispatcher(CommonController.URL_GOTO_LOGIN_PAGE).forward(request, response);
-            return false;
+                rtn = false;
+                break;
         }
+
+        return rtn;
+
+//        if (CommonController.URL_GOTO_LOGIN_PAGE.equals(url) || CommonController.URL_LOGIN.equals(url)) {
+//            return true;
+//        }
+//
+//        if (userInfo != null) {
+//            // 添加权限控制，判断当前用户是否有此操作权限
+//            if (!checkTrans(url, userAllTrans)) {
+//                request.getRequestDispatcher("/error/no_access.html").forward(request, response);
+//                return false;
+//            }
+//            return true;
+//        } else {
+//            log.info("Interceptor：跳转到login页面！");
+//            request.getRequestDispatcher(CommonController.URL_GOTO_LOGIN_PAGE).forward(request, response);
+//            return false;
+//        }
     }
 
-    private boolean checkTrans(String url, Map<String, String> userAllTrans){
+    private boolean checkTrans(String url, Map<String, String> userAllTrans) {
         String subTrans = "";
-        if(!"/".equals(url)){
+        if (!"/".equals(url)) {
             subTrans = url.substring(0, url.lastIndexOf(".do"));
-        }else{
+        } else {
             return true;
         }
 
-        if(userAllTrans == null){
+        if (userAllTrans == null) {
             return false;
         }
         return userAllTrans.containsKey(subTrans);
@@ -101,7 +125,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter{
 
     /**
      * 在DispatcherServlet完全处理完请求后被调用,可用于清理资源等
-     *
+     * <p>
      * 当有拦截器抛出异常时,会从当前拦截器往回执行所有的拦截器的afterCompletion()
      */
     @Override

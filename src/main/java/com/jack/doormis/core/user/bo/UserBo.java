@@ -65,4 +65,8 @@ public class UserBo {
 
         return user;
     }
+
+    public List<String> searchAllRoles(){
+        return userDao.searchAllRoles();
+    }
 }

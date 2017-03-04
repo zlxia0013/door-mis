@@ -118,5 +118,12 @@
 	    WHERE 
 	        id = #{id}
 	</delete>
+
+
+	<select id="searchAllRoles" resultType="String">
+		SELECT DISTINCT role
+		FROM
+		t_user t
+	</select>
 	
 </mapper>

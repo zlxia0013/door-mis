@@ -1,6 +1,8 @@
 package com.jack.doormis.core.user.pojo;
 
 
+import com.jack.doormis.core.user.SuperUserName;
+
 import java.util.Date;
 
 public class User  {
@@ -8,7 +10,7 @@ public class User  {
 
 	private Integer verNbr;
 
-	private String loginName;
+	private String userName;
 
 	private String pwd;
 
@@ -51,12 +53,12 @@ public class User  {
 		this.verNbr = verNbr;
 	}
 
-	public String getLoginName() {
-		return loginName;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setLoginName(String loginName) {
-		this.loginName = loginName;
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 
 	public String getPwd() {
@@ -138,6 +140,10 @@ public class User  {
 	public void setLastAccessTime(Date lastAccessTime) {
 		this.lastAccessTime = lastAccessTime;
 	}
-	
+
+	public boolean isSuperAdmin() {
+		return SuperUserName.ADMIN.equals(userName);
+	}
+
 	// %%ONLY_FOR_INS_FLD%FI_JAVA_ENTITY_GET_SET%%
 }

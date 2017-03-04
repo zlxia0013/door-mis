@@ -6,20 +6,22 @@ import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
-public interface UserDao  {
-	public User getById(@Param("id") int id);
+public interface UserDao {
+    User getById(@Param("id") int id);
 
-	public User getByUserName(String userName);
+    User getByUserName(String userName);
 
-	public List<User> search(User user);
+    List<User> search(User user);
 
-	public List<User> searchPaged(User user);
+    List<User> searchPaged(User user);
 
-	public Long searchCnt(User user);
+    Long searchCnt(User user);
 
-	public void add(User user);
+    void add(User user);
 
-	public void update(User user);
+    void update(User user);
 
-	public void delete(User user);
+    void delete(User user);
+
+    List<String> searchAllRoles();
 }

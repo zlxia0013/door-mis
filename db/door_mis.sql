@@ -30,7 +30,7 @@ CREATE TABLE `t_authority` (
 
 /*Data for the table `t_authority` */
 
-insert  into `t_authority`(`name`,`value`,`for_all`,`comments`) values ('client_goto_main_page','/client/goto_main_page',0,'打开客户管理面面'),('goto_login_page','/goto_login_page',1,'打开登陆页面'),('login','/login',1,'登陆');
+insert  into `t_authority`(`name`,`value`,`for_all`,`comments`) values ('client_add','/client/add',0,'新增用户'),('client_goto_main_page','/client/goto_main_page',0,'打开客户管理面面'),('goto_login_page','/goto_login_page',1,'打开登陆页面'),('login','/login',1,'登陆');
 
 /*Table structure for table `t_client` */
 
@@ -83,7 +83,7 @@ CREATE TABLE `t_role_authority` (
 
 /*Data for the table `t_role_authority` */
 
-insert  into `t_role_authority`(`role`,`authority`) values ('EMPL','client_goto_main_page');
+insert  into `t_role_authority`(`role`,`authority`) values ('ADMIN','client_add'),('ADMIN','client_goto_main_page'),('EMPL','client_goto_main_page');
 
 /*Table structure for table `t_user` */
 

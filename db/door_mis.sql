@@ -30,7 +30,7 @@ CREATE TABLE `t_authority` (
 
 /*Data for the table `t_authority` */
 
-insert  into `t_authority`(`name`,`value`,`for_all`,`comments`) values ('client_add','/client/add',0,'新增用户'),('client_goto_main_page','/client/goto_main_page',0,'打开客户管理面面'),('goto_login_page','/goto_login_page',1,'打开登陆页面'),('login','/login',1,'登陆');
+insert  into `t_authority`(`name`,`value`,`for_all`,`comments`) values ('client_add','/client/add',0,'新增用户'),('client_goto_add_page','/client/goto_add_page',0,'打开新增客户页面'),('client_goto_main_page','/client/goto_main_page',0,'打开客户管理页面'),('goto_login_page','/goto_login_page',1,'打开登陆页面'),('login','/login',1,'登陆');
 
 /*Table structure for table `t_client` */
 
@@ -39,9 +39,9 @@ DROP TABLE IF EXISTS `t_client`;
 CREATE TABLE `t_client` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `ver_nbr` int(11) NOT NULL DEFAULT '1',
-  `real_name` varchar(20) NOT NULL,
+  `real_name` varchar(30) NOT NULL,
   `code` varchar(20) NOT NULL,
-  `phone` varchar(20) DEFAULT NULL,
+  `phone` varchar(50) DEFAULT NULL,
   `address` varchar(255) DEFAULT NULL,
   `wechat` varchar(100) DEFAULT NULL,
   `logistics` varchar(100) DEFAULT NULL,
@@ -53,9 +53,11 @@ CREATE TABLE `t_client` (
   `del_time` datetime DEFAULT NULL COMMENT '删除时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `idx_client_real_name` (`real_name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_client` */
+
+insert  into `t_client`(`id`,`ver_nbr`,`real_name`,`code`,`phone`,`address`,`wechat`,`logistics`,`remark`,`add_user_id`,`add_time`,`soft_del`,`del_user_id`,`del_time`) values (1,1,'a','b','c','d','e','f',NULL,1,'2017-03-05 20:29:54',0,0,NULL),(3,1,'aa','b','c','d','e','f','g',1,'2017-03-05 20:36:57',0,0,NULL),(4,1,'111','11111','13735525854','aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa','','','',1,'2017-03-05 20:38:11',0,0,NULL),(5,1,'asdf','asdf','asdf','dddddddddddddd','ffffffffffff','dfsgdsgsdfg','sdfffffsddddddddddddddddddddddddddd',1,'2017-03-05 20:39:00',0,0,NULL),(6,1,'adasfdsa','safsadf','sadfd','safdsafsa','','','',1,'2017-03-05 20:39:17',0,0,NULL);
 
 /*Table structure for table `t_client_query` */
 
@@ -83,7 +85,7 @@ CREATE TABLE `t_role_authority` (
 
 /*Data for the table `t_role_authority` */
 
-insert  into `t_role_authority`(`role`,`authority`) values ('ADMIN','client_add'),('ADMIN','client_goto_main_page'),('EMPL','client_goto_main_page');
+insert  into `t_role_authority`(`role`,`authority`) values ('ADMIN','client_add'),('ADMIN','client_goto_add_page'),('ADMIN','client_goto_main_page'),('EMPL','client_goto_main_page');
 
 /*Table structure for table `t_user` */
 

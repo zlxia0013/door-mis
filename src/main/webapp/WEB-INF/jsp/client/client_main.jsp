@@ -43,7 +43,7 @@
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <li class="nav-header"><i class="icon-wrench"></i> Administration</li>
-                    <li class="active"><a href="users.html">客户管理</a></li>
+                    <li class="active"><a href="${path}/client/goto_main_page">客户管理</a></li>
                     <li><a href="roles.html">用户管理</a></li>
 
                     <li class="nav-header"><i class="icon-user"></i> Profile</li>
@@ -129,7 +129,7 @@
                         <li><a href="#">Next</a></li>
                     </ul>
                 </div>
-                <a href="new-user.html" class="btn btn-success">新增</a>
+                <a href="${path}/client/goto_add_page" class="btn btn-success">新增</a>
             </div>
         </div>
     </div>
@@ -137,7 +137,7 @@
     <hr>
 
     <footer class="well">
-        &copy; Strass
+        &copy; 客户管理系统
     </footer>
 
 </div>

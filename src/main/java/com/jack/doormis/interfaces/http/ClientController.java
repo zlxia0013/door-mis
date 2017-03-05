@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Controller
 @RequestMapping(value = "/client")
@@ -28,15 +29,20 @@ public class ClientController {
 	@Autowired
 	private ClientBo clientBo;
 	
-	/**
-	 * 跳转到表格页面
-	 * @return
-	 */
 	@RequestMapping(value = "/goto_main_page",method = RequestMethod.GET)
     public ModelAndView gotoMainPage(HttpSession session) {
         User userInfo = (User)session.getAttribute(CommonKeys.SESSION_USER);
 
         ModelAndView modelAndView = new ModelAndView("client/client_main");
+        modelAndView.addObject(ClientKeys.JspParam_UserInfo, userInfo);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/goto_add_page",method = RequestMethod.GET)
+    public ModelAndView gotoAddPage(HttpSession session) {
+        User userInfo = (User)session.getAttribute(CommonKeys.SESSION_USER);
+
+        ModelAndView modelAndView = new ModelAndView("client/client_add");
         modelAndView.addObject(ClientKeys.JspParam_UserInfo, userInfo);
         return modelAndView;
     }
@@ -47,9 +53,12 @@ public class ClientController {
 	 */
 	@ResponseBody
 	@RequestMapping(value = "/add",method = RequestMethod.POST)
-    public Json add(Client client) {
+    public Json add(Client client, HttpSession session) {
         Json json = new Json();
         try {
+            User userInfo = (User)session.getAttribute(CommonKeys.SESSION_USER);
+            client.setAddUserId(userInfo.getId());
+            client.setAddTime(new Date());
             clientBo.add(client);
             json.setSuccess(true);
         } catch (DoorMisRuntimeException e) {

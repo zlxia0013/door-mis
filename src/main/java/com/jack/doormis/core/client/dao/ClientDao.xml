@@ -27,6 +27,15 @@
 		t.id = #{id}
 	</select>
 
+	<select id="getByRealName" parameterType="String" resultType="com.jack.doormis.core.client.pojo.Client">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		t_client t
+		WHERE
+		t.real_name = #{realName}
+	</select>
+
 	<select id="search" parameterType="com.jack.doormis.core.client.pojo.Client" resultType="com.jack.doormis.core.client.pojo.Client">
 		SELECT 
 	 		<include refid="Base_Column_List" />

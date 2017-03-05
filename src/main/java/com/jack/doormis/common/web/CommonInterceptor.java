@@ -58,26 +58,24 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
         log.info("contextPath:" + contextPath);
         log.info("url:" + url);
 
-        return true;
+        User userInfo = (User) request.getSession().getAttribute(Keys.SESSION_USER);
 
-//        User userInfo = (User) request.getSession().getAttribute(Keys.SESSION_USER);
-//
-//        boolean rtn = false;
-//        CheckAuthorityResultEnum result = authorityBo.checkAuthority(userInfo, url);
-//        switch (result) {
-//            case RETURN_TRUE:
-//                rtn = true;
-//                break;
-//            case NEED_LOGIN:
-//                request.getRequestDispatcher(CommonController.URL_GOTO_LOGIN_PAGE).forward(request, response);
-//                rtn = false;
-//                break;
-//            case NO_AUTHORITY:
-//                request.getRequestDispatcher("/error/no_access.html").forward(request, response);
-//                rtn = false;
-//                break;
-//        }
-//
-//        return rtn;
+        boolean rtn = false;
+        CheckAuthorityResultEnum result = authorityBo.checkAuthority(userInfo, url);
+        switch (result) {
+            case RETURN_TRUE:
+                rtn = true;
+                break;
+            case NEED_LOGIN:
+                request.getRequestDispatcher(CommonController.URL_GOTO_LOGIN_PAGE).forward(request, response);
+                rtn = false;
+                break;
+            case NO_AUTHORITY:
+                request.getRequestDispatcher("/error/no_access.html").forward(request, response);
+                rtn = false;
+                break;
+        }
+
+        return rtn;
     }
 }

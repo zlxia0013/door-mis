@@ -25,7 +25,7 @@
     <context:component-scan base-package="com.jack.doormis.interfaces.http" />
 
     <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">  
-        <property name="prefix" value="WEB-INF/jsp/" />
+        <property name="prefix" value="/WEB-INF/jsp/" />
         <property name="suffix" value=".jsp" />  <!--可为空,方便实现自已的依据扩展名来选择视图解释类的逻辑  -->
     </bean>  
     <mvc:view-controller path="/" view-name="forward:/index.jsp"/>

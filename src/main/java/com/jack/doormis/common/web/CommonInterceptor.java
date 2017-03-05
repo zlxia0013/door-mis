@@ -58,7 +58,7 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
         log.info("contextPath:" + contextPath);
         log.info("url:" + url);
 
-        User userInfo = (User) request.getSession().getAttribute(Keys.SESSION_USER);
+        User userInfo = (User) request.getSession().getAttribute(CommonKeys.SESSION_USER);
 
         boolean rtn = false;
         CheckAuthorityResultEnum result = authorityBo.checkAuthority(userInfo, url);

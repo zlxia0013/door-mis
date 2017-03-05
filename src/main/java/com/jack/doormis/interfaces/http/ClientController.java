@@ -1,20 +1,24 @@
 package com.jack.doormis.interfaces.http;
 
 
+import com.jack.doormis.common.web.ClientKeys;
 import com.jack.doormis.common.web.Json;
+import com.jack.doormis.common.web.CommonKeys;
 import com.jack.doormis.core.client.bo.ClientBo;
 import com.jack.doormis.core.client.pojo.Client;
+import com.jack.doormis.core.user.pojo.User;
 import com.jack.doormis.util.ReturnCodes;
 import com.jack.doormis.util.exception.DoorMisRuntimeException;
 import com.jack.doormis.util.exception.DoorMisSystemException;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping(value = "/client")
@@ -29,8 +33,11 @@ public class ClientController {
 	 * @return
 	 */
 	@RequestMapping(value = "/goto_main_page",method = RequestMethod.GET)
-    public ModelAndView gotoMainPage() {
+    public ModelAndView gotoMainPage(HttpSession session) {
+        User userInfo = (User)session.getAttribute(CommonKeys.SESSION_USER);
+
         ModelAndView modelAndView = new ModelAndView("client/client_main");
+        modelAndView.addObject(ClientKeys.JspParam_UserInfo, userInfo);
         return modelAndView;
     }
 	

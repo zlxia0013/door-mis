@@ -1,7 +1,12 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html lang="zh">
+<html>
 <head>
+    <title>客户管理系统</title>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <%
         String path = request.getContextPath();
         path = "/".equals(path)?"":path;
@@ -11,13 +16,9 @@
         var path = "${path}";
     </script>
 
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>客户管理系统</title>
-    <link rel="stylesheet" type="text/css" href="${path}/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="${path}/css/htmleaf-demo.css">
-    <link rel="stylesheet" type="text/css" href="${path}/css/signin.css">
+    <link rel="stylesheet" type="text/css" href="${path}/css/login/bootstrap_3_3_6.css">
+    <link rel="stylesheet" type="text/css" href="${path}/css/login/htmleaf-demo.css">
+    <link rel="stylesheet" type="text/css" href="${path}/css/login/signin.css">
 </head>
 <body>
 <div class="htmleaf-container">

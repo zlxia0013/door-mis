@@ -1,3 +1,4 @@
+<%@ page import="com.jack.doormis.core.user.UserStateEnum" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -43,8 +44,8 @@
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <li class="nav-header"><i class="icon-wrench"></i> Administration</li>
-                    <li class="active"><a href="${path}/client/goto_main_page">客户管理</a></li>
-                    <li><a href="${path}/user/goto_main_page">用户管理</a></li>
+                    <li><a href="${path}/client/goto_main_page">客户管理</a></li>
+                    <li class="active"><a href="${path}/user/goto_main_page">用户管理</a></li>
 
                     <li class="nav-header"><i class="icon-user"></i> Profile</li>
                     <li><a href="my-profile.html">修改密码</a></li>
@@ -55,10 +56,16 @@
         <div class="span9">
             <div class="row-fluid">
                 <div class="page-header">
-                    <h1>新增客户</h1>
+                    <h1>新增用户</h1>
                 </div>
                 <form class="form-horizontal">
                     <fieldset>
+                        <div class="control-group">
+                            <label class="control-label" for="userName">用户名</label>
+                            <div class="controls">
+                                <input type="text" class="input-xlarge" id="userName"/>
+                            </div>
+                        </div>
                         <div class="control-group">
                             <label class="control-label" for="realName">姓名</label>
                             <div class="controls">
@@ -66,35 +73,36 @@
                             </div>
                         </div>
                         <div class="control-group">
-                            <label class="control-label" for="code">编号</label>
+                            <label class="control-label" for="pwd">密码</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="code"/>
+                                <input type="text" class="input-xlarge" id="pwd"/>
                             </div>
                         </div>
+
+                        <div class="control-group">
+                            <label class="control-label" for="role">角色</label>
+                            <div class="controls">
+                                <select id="role">
+                                    <option value="EMPL">操作员</option>
+                                    <option value="ADMIN">管理员</option>
+                                </select>
+                            </div>
+                        </div>
+
                         <div class="control-group">
                             <label class="control-label" for="phone">电话</label>
                             <div class="controls">
                                 <input type="text" class="input-xlarge" id="phone"/>
                             </div>
                         </div>
+
                         <div class="control-group">
-                            <label class="control-label" for="address">地址</label>
+                            <label class="control-label" for="stateId">帐户可用</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="address"/>
+                                <input type="checkbox" id="stateId" checked/>
                             </div>
                         </div>
-                        <div class="control-group">
-                            <label class="control-label" for="wechat">微信号</label>
-                            <div class="controls">
-                                <input type="text" class="input-xlarge" id="wechat"/>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label" for="logistics">货运部</label>
-                            <div class="controls">
-                                <input type="text" class="input-xlarge" id="logistics"/>
-                            </div>
-                        </div>
+
                         <div class="control-group">
                             <label class="control-label" for="remark">备注</label>
                             <div class="controls">
@@ -103,7 +111,7 @@
                         </div>
                         <div class="form-actions">
                             <input type="button" class="btn btn-success btn-large"  onclick="add()" value="保  存"/>
-                            <a class="btn" href="${path}/client/goto_main_page">Cancel</a>
+                            <a class="btn" href="${path}/user/goto_main_page">Cancel</a>
                         </div>
                     </fieldset>
                 </form>
@@ -124,15 +132,27 @@
 
 <script type="text/javascript">
     function add(){
+        var userName = $.trim($("#userName").val());
+        if(userName == ""){
+            alert("请输入用户名");
+            return;
+        }
+
         var realName = $.trim($("#realName").val());
         if(realName == ""){
             alert("请输入姓名");
             return;
         }
 
-        var code = $.trim($("#code").val());
-        if(code == ""){
-            alert("请输入编号");
+        var pwd = $.trim($("#pwd").val());
+        if(pwd == ""){
+            alert("请输入密码");
+            return;
+        }
+
+        var role = $.trim($("#role").val());
+        if(role == ""){
+            alert("请选择角色");
             return;
         }
 
@@ -142,32 +162,31 @@
             return;
         }
 
-        var address = $.trim($("#address").val());
-        if(address == ""){
-            alert("请输入地址");
-            return;
+        var stateId;
+        if($('#stateId').is(':checked')){
+            stateId = <%=UserStateEnum.ENABLED.getStateId()%>;
+        } else {
+            stateId = <%=UserStateEnum.DISABLED.getStateId()%>;
         }
 
-        var wechat = $.trim($("#wechat").val());
-        var logistics = $.trim($("#logistics").val());
         var remark = $.trim($("#remark").val());
 
         $.ajax({
-            url:"${path}/client/add",
+            url:"${path}/user/add",
             type:"post",
             data:{
+                userName:userName,
                 realName:realName,
-                code:code,
+                pwd:pwd,
+                role:role,
                 phone:phone,
-                address:address,
-                wechat:wechat,
-                logistics:logistics,
+                stateId:stateId,
                 remark:remark
             },
             success:function(result){
                 var re = JSON.parse(result);
                 if(re.returnCode=="0"){
-                    window.location.href="${path}/client/goto_main_page";
+                    window.location.href="${path}/user/goto_main_page";
                 }else{
                     alert(re.msg);
                 }

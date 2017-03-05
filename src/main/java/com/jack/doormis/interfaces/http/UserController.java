@@ -1,6 +1,8 @@
 package com.jack.doormis.interfaces.http;
 
 
+import com.jack.doormis.common.web.ClientKeys;
+import com.jack.doormis.common.web.CommonKeys;
 import com.jack.doormis.common.web.Json;
 import com.jack.doormis.core.user.bo.UserBo;
 import com.jack.doormis.core.user.pojo.User;
@@ -15,6 +17,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpSession;
+import java.util.Date;
 
 @Controller
 @RequestMapping(value = "/user")
@@ -23,25 +29,36 @@ public class UserController {
 	
 	@Autowired
 	private UserBo userBo;
-	
-	/**
-	 * 跳转到表格页面
-	 * @return
-	 */
-	@RequestMapping(value = "/list",method = RequestMethod.GET)
-    public String list(Model model) {
-        return "/user/user_list";
+
+
+
+    @RequestMapping(value = "/goto_main_page",method = RequestMethod.GET)
+    public ModelAndView gotoMainPage(HttpSession session) {
+        User userInfo = (User)session.getAttribute(CommonKeys.SESSION_USER);
+
+        ModelAndView modelAndView = new ModelAndView("user/user_main");
+        modelAndView.addObject(ClientKeys.JspParam_UserInfo, userInfo);
+        return modelAndView;
     }
-	
-	/**
-	 * 新增
-	 * @return
-	 */
+
+    @RequestMapping(value = "/goto_add_page",method = RequestMethod.GET)
+    public ModelAndView gotoAddPage(HttpSession session) {
+        User userInfo = (User)session.getAttribute(CommonKeys.SESSION_USER);
+
+        ModelAndView modelAndView = new ModelAndView("user/user_add");
+        modelAndView.addObject(ClientKeys.JspParam_UserInfo, userInfo);
+        return modelAndView;
+    }
+
+
 	@ResponseBody
 	@RequestMapping(value = "/add",method = RequestMethod.POST)
-    public Json add(User user) {
+    public Json add(User user, HttpSession session) {
         Json json = new Json();
         try {
+            User userInfo = (User)session.getAttribute(CommonKeys.SESSION_USER);
+            user.setAddUserId(userInfo.getId());
+            user.setAddTime(new Date());
             userBo.add(user);
             json.setSuccess(true);
         } catch (DoorMisRuntimeException e) {

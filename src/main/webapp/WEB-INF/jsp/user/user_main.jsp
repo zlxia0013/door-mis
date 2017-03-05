@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>客户管理</title>
+    <title>用户管理</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -43,8 +43,8 @@
             <div class="well sidebar-nav">
                 <ul class="nav nav-list">
                     <li class="nav-header"><i class="icon-wrench"></i> Administration</li>
-                    <li class="active"><a href="${path}/client/goto_main_page">客户管理</a></li>
-                    <li><a href="${path}/user/goto_main_page">用户管理</a></li>
+                    <li><a href="${path}/client/goto_main_page">客户管理</a></li>
+                    <li class="active"><a href="${path}/user/goto_main_page">用户管理</a></li>
 
                     <li class="nav-header"><i class="icon-user"></i> Profile</li>
                     <li><a href="my-profile.html">修改密码</a></li>
@@ -55,7 +55,7 @@
         <div class="span9">
             <div class="row-fluid">
                 <div class="page-header">
-                    <h1>客户管理</h1>
+                    <h1>用户管理</h1>
                 </div>
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
@@ -129,7 +129,7 @@
                         <li><a href="#">Next</a></li>
                     </ul>
                 </div>
-                <a href="${path}/client/goto_add_page" class="btn btn-success">新增</a>
+                <a href="${path}/user/goto_add_page" class="btn btn-success">新增</a>
             </div>
         </div>
     </div>

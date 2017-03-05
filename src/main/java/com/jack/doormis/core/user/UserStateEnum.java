@@ -5,16 +5,16 @@ import com.jack.doormis.util.exception.DoorMisRuntimeException;
 /**
  * Created by Jack on 2017/3/2.
  */
-public enum UserState {
+public enum UserStateEnum {
     ENABLED(1), DISABLED(0);
 
     private int stateId;
 
-    UserState(int stateId) {
+    UserStateEnum(int stateId) {
         this.stateId = stateId;
     }
 
-    public static UserState valueOf(int stateId) {
+    public static UserStateEnum valueOf(int stateId) {
         switch (stateId) {
             case 1:
                 return ENABLED;
@@ -26,8 +26,17 @@ public enum UserState {
     }
 
     public static boolean enabled(int stateId) {
-        UserState state = valueOf(stateId);
+        UserStateEnum state = valueOf(stateId);
         return state == ENABLED;
+    }
+
+    public static boolean isValid(int stateId) {
+        try {
+            valueOf(stateId);
+            return true;
+        } catch (Throwable e) {
+            return false;
+        }
     }
 
     public int getStateId() {

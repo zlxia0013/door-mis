@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -25,6 +26,7 @@ public class CommonController {
 
     public static final String URL_GOTO_LOGIN_PAGE = "/goto_login_page";
     public static final String URL_LOGIN = "/login";
+    public static final String URL_LOGOUT = "/logout";
 
     @RequestMapping(value = URL_GOTO_LOGIN_PAGE)
     public String gotoLoginPage() {
@@ -49,5 +51,14 @@ public class CommonController {
         }
 
         return json;
+    }
+
+    @RequestMapping(value = URL_LOGOUT, method = RequestMethod.GET)
+    public String logout(HttpServletRequest request) {
+       if (request.getSession() !=null ){
+           request.getSession().invalidate();
+       }
+
+        return "redirect:" + URL_GOTO_LOGIN_PAGE;
     }
 }

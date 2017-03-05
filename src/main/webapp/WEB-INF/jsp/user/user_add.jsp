@@ -49,7 +49,7 @@
 
                     <li class="nav-header"><i class="icon-user"></i> Profile</li>
                     <li><a href="my-profile.html">修改密码</a></li>
-                    <li><a href="#">退出</a></li>
+                    <li><a href="${path}/logout">退出</a></li>
                 </ul>
             </div>
         </div>

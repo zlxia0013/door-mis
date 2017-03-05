@@ -63,7 +63,7 @@
             success:function(result){
                 var re = JSON.parse(result);
                 if(re.returnCode=="0"){
-                    location.reload();
+                    window.location.href="${path}/client/goto_main_page";
                 }else{
                     alert(re.msg);
                 }

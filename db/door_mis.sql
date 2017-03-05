@@ -24,13 +24,14 @@ CREATE TABLE `t_authority` (
   `name` varchar(50) NOT NULL COMMENT '权限名',
   `value` varchar(100) DEFAULT NULL COMMENT '权限值，比如url',
   `for_all` int(1) DEFAULT '0' COMMENT '是否对所有的权限都有权限',
+  `must_has_login` int(1) DEFAULT '0' COMMENT '必须已经登陆， 此字段只有在for_all=1时才有意义',
   `comments` varchar(200) DEFAULT NULL COMMENT '说明',
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_authority` */
 
-insert  into `t_authority`(`name`,`value`,`for_all`,`comments`) values ('client_add','/client/add',0,'新增用户'),('client_goto_add_page','/client/goto_add_page',0,'打开新增客户页面'),('client_goto_main_page','/client/goto_main_page',0,'打开客户管理页面'),('goto_login_page','/goto_login_page',1,'打开登陆页面'),('login','/login',1,'登陆');
+insert  into `t_authority`(`name`,`value`,`for_all`,`must_has_login`,`comments`) values ('client_add','/client/add',0,0,'新增用户'),('client_goto_add_page','/client/goto_add_page',0,0,'打开新增客户页面'),('client_goto_main_page','/client/goto_main_page',0,0,'打开客户管理页面'),('goto_login_page','/goto_login_page',1,0,'打开登陆页面'),('login','/login',1,0,'登陆'),('logout','/logout',1,0,'注销'),('user_goto_update_pwd_page','/user/goto_update_pwd_page',1,1,'打开修改密码页面'),('user_update_pwd','/user/update_pwd',1,1,'修改密码');
 
 /*Table structure for table `t_client` */
 
@@ -108,11 +109,11 @@ CREATE TABLE `t_user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `uq_user_login_name` (`user_name`),
   KEY `idx_add_time` (`add_time`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8;
 
 /*Data for the table `t_user` */
 
-insert  into `t_user`(`id`,`ver_nbr`,`user_name`,`pwd`,`role`,`phone`,`real_name`,`state_id`,`add_user_id`,`add_time`,`remark`,`last_login_time`,`last_access_time`) values (1,1,'admin','aa','ADMIN',NULL,'夏',1,1,'2017-02-26 11:15:30',NULL,NULL,NULL),(2,1,'op1','aa','EMPL',NULL,NULL,1,1,'2017-03-02 22:44:00',NULL,NULL,NULL);
+insert  into `t_user`(`id`,`ver_nbr`,`user_name`,`pwd`,`role`,`phone`,`real_name`,`state_id`,`add_user_id`,`add_time`,`remark`,`last_login_time`,`last_access_time`) values (1,1,'admin','aa','ADMIN',NULL,'夏',1,1,'2017-02-26 11:15:30',NULL,'2017-03-05 22:41:48',NULL),(2,1,'op1','aa','EMPL',NULL,NULL,1,1,'2017-03-02 22:44:00',NULL,NULL,NULL),(3,1,'a','c','EMPL','asdfsaf','b',1,1,'2017-03-05 21:31:12','',NULL,NULL),(4,1,'aa','c','ADMIN','asdfsaf','b',1,1,'2017-03-05 21:32:47','asdfadsf',NULL,NULL),(5,1,'ddd','ddd','EMPL','ddd','ddd',1,1,'2017-03-05 21:45:57','ddd',NULL,NULL),(6,1,'1','3','ADMIN','4','2',0,1,'2017-03-05 21:46:14','5',NULL,NULL);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

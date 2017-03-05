@@ -123,7 +123,28 @@ public class UserBo {
         return user;
     }
 
-    public List<String> searchAllRoles(){
+    public List<String> searchAllRoles() {
         return userDao.searchAllRoles();
+    }
+
+    public void updatePwd(String userName, String oldPwd, String newPwd) {
+        User user = getByUserName(userName);
+        if (user == null) {
+            throw new DoorMisRuntimeException("用户名不存在");
+        }
+
+        if (!user.getPwd().equals(oldPwd)) {
+            throw new DoorMisRuntimeException("原密码错误");
+        }
+
+        if (StringUtil.isEmpty(newPwd)) {
+            throw new DoorMisRuntimeException("新密码不能为空");
+        } else if (newPwd.length() > 20) {
+            throw new DoorMisRuntimeException("新密码不能大于20位");
+        }
+
+        //direct update
+        user.setPwd(newPwd);
+        userDao.update(user);
     }
 }

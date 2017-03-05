@@ -7,6 +7,8 @@ public class Authority {
 
     private Integer forAll;
 
+    private Integer mustHasLogin;//必须已经登陆， 此字段只有在for_all=1时才有意义
+
     private String comments;
 
     // %%ONLY_FOR_INS_FLD%FI_JAVA_ENTITY_DECLARE%%
@@ -46,5 +48,12 @@ public class Authority {
         this.comments = comments;
     }
 
-    // %%ONLY_FOR_INS_FLD%FI_JAVA_ENTITY_GET_SET%%
+    public Integer getMustHasLogin() {
+        return mustHasLogin;
+    }
+
+    public void setMustHasLogin(Integer mustHasLogin) {
+        this.mustHasLogin = mustHasLogin;
+    }
+// %%ONLY_FOR_INS_FLD%FI_JAVA_ENTITY_GET_SET%%
 }

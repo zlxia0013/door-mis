@@ -23,12 +23,17 @@ public class AuthorityBo {
     private UserBo userBo;
 
     private Set<String> forAllAuthorities = new HashSet<String>();
+    private Set<String> mustHasLoginAuthorities = new HashSet<String>();
     private Map<String, Set<String>> roleAuthorities = new HashMap<String, Set<String>>();
 
     public CheckAuthorityResultEnum checkAuthority(User userInfo, String url) {
         //无条件跳转
         if (forAllAuthorities.contains(url)) {
-            return CheckAuthorityResultEnum.RETURN_TRUE;
+            if (mustHasLoginAuthorities.contains(url) && userInfo == null) {
+                return CheckAuthorityResultEnum.NEED_LOGIN;
+            } else {
+                return CheckAuthorityResultEnum.RETURN_TRUE;
+            }
         }
 
         //超级用户admin
@@ -62,6 +67,10 @@ public class AuthorityBo {
             List<Authority> forAllAuthoritiesLst = searchForAllAuthorities();
             for (Authority auth : forAllAuthoritiesLst) {
                 forAllAuthorities.add(auth.getValue());
+
+                if (auth.getMustHasLogin() == 1) {
+                    mustHasLoginAuthorities.add(auth.getValue());
+                }
             }
 
             //role authorities

@@ -5,6 +5,7 @@
 		 t.name as name,
 		 t.value as value,
 		 t.for_all as forAll,
+		 t.must_has_login as mustHasLogin,
 		 t.comments as comments
 	</sql>
 	
@@ -47,12 +48,14 @@
 			<if test="name != null" >name,</if>
 			<if test="value != null" >value,</if>
 			<if test="forAll != null" >for_all,</if>
+			<if test="mustHasLogin != null" >must_has_login,</if>
 			<if test="comments != null" >comments,</if>              	
 		</trim>
 		<trim prefix="values (" suffix=")" suffixOverrides="," >
           	<if test="name != null" >#{name},</if>
           	<if test="value != null" >#{value},</if>
-          	<if test="forAll != null" >#{forAll},</if>
+			<if test="forAll != null" >#{forAll},</if>
+			<if test="mustHasLogin != null" >#{mustHasLogin},</if>
           	<if test="comments != null" >#{comments},</if> 
         </trim>
 	</insert>
@@ -63,7 +66,8 @@
 		<set> 
 	        <if test="name != null" >name = #{name},</if>
 	        <if test="value != null" >value = #{value},</if>
-	        <if test="forAll != null" >for_all = #{forAll},</if>
+			<if test="forAll != null" >for_all = #{forAll},</if>
+			<if test="mustHasLogin != null" >must_has_login = #{mustHasLogin},</if>
 	        <if test="comments != null" >comments = #{comments},</if>
 	    </set>
 	   	WHERE 

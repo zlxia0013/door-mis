@@ -98,4 +98,28 @@ public class UserController {
         return json;
     }
 
+    @RequestMapping(value = "/goto_update_pwd_page",method = RequestMethod.GET)
+    public String gotoUpdatePwdPage() {
+        return"user/user_update_pwd";
+    }
+
+    @ResponseBody
+    @RequestMapping(value = "/update_pwd",method = RequestMethod.POST)
+    public Json updatePwd(String oldPwd, String newPwd, HttpSession session) {
+        Json json = new Json();
+        try {
+            User userInfo = (User)session.getAttribute(CommonKeys.SESSION_USER);
+            userBo.updatePwd(userInfo.getUserName(), oldPwd, newPwd);
+            json.setSuccess(true);
+        } catch (DoorMisRuntimeException e) {
+            json = new Json(e.getErrorCode(), e.getMessage());
+        } catch (DoorMisSystemException e) {
+            log.error("error", e);
+            json = new Json(e.getErrorCode(), "系统忙... " + e.getMessage());
+        } catch (Throwable e) {
+            log.error("error", e);
+            json = new Json(ReturnCodes.SYSTEM_EXCEPTION, "系统忙... " + e.getMessage());
+        }
+        return json;
+    }
 }

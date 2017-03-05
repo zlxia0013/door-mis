@@ -47,7 +47,7 @@
                     <li class="active"><a href="${path}/user/goto_main_page">用户管理</a></li>
 
                     <li class="nav-header"><i class="icon-user"></i> Profile</li>
-                    <li><a href="my-profile.html">修改密码</a></li>
+                    <li><a href="${path}/user/goto_update_pwd_page">修改密码</a></li>
                     <li><a href="${path}/logout">退出</a></li>
                 </ul>
             </div>

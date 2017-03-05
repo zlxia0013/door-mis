@@ -28,8 +28,8 @@ public class ClientController {
 	 * @return
 	 */
 	@RequestMapping(value = "/goto_main_page",method = RequestMethod.GET)
-    public String list(Model model) {
-        return "/client/client_main";
+    public String list() {
+        return "client/client_main";
     }
 	
 	/**

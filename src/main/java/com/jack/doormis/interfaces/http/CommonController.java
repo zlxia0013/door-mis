@@ -34,7 +34,7 @@ public class CommonController {
 
     @RequestMapping(value = URL_GOTO_LOGIN_PAGE)
     public String gotoLoginPage() {
-        return "/common/login";
+        return "common/login";
     }
 
     @RequestMapping(value = URL_LOGIN, method = RequestMethod.POST)

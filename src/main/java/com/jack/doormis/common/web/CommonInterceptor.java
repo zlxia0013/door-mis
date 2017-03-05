@@ -1,6 +1,5 @@
 package com.jack.doormis.common.web;
 
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,7 +11,6 @@ import com.jack.doormis.interfaces.http.CommonController;
 import org.apache.log4j.Logger;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 
@@ -60,78 +58,26 @@ public class CommonInterceptor extends HandlerInterceptorAdapter {
         log.info("contextPath:" + contextPath);
         log.info("url:" + url);
 
-        User userInfo = (User) request.getSession().getAttribute(Keys.SESSION_USER);
+        return true;
 
-        boolean rtn = false;
-        CheckAuthorityResultEnum result = authorityBo.checkAuthority(userInfo, url);
-        switch (result) {
-            case RETURN_TRUE:
-                rtn = true;
-                break;
-            case NEED_LOGIN:
-                request.getRequestDispatcher(CommonController.URL_GOTO_LOGIN_PAGE).forward(request, response);
-                rtn = false;
-                break;
-            case NO_AUTHORITY:
-                request.getRequestDispatcher("/error/no_access.html").forward(request, response);
-                rtn = false;
-                break;
-        }
-
-        return rtn;
-
-//        if (CommonController.URL_GOTO_LOGIN_PAGE.equals(url) || CommonController.URL_LOGIN.equals(url)) {
-//            return true;
+//        User userInfo = (User) request.getSession().getAttribute(Keys.SESSION_USER);
+//
+//        boolean rtn = false;
+//        CheckAuthorityResultEnum result = authorityBo.checkAuthority(userInfo, url);
+//        switch (result) {
+//            case RETURN_TRUE:
+//                rtn = true;
+//                break;
+//            case NEED_LOGIN:
+//                request.getRequestDispatcher(CommonController.URL_GOTO_LOGIN_PAGE).forward(request, response);
+//                rtn = false;
+//                break;
+//            case NO_AUTHORITY:
+//                request.getRequestDispatcher("/error/no_access.html").forward(request, response);
+//                rtn = false;
+//                break;
 //        }
 //
-//        if (userInfo != null) {
-//            // 添加权限控制，判断当前用户是否有此操作权限
-//            if (!checkTrans(url, userAllTrans)) {
-//                request.getRequestDispatcher("/error/no_access.html").forward(request, response);
-//                return false;
-//            }
-//            return true;
-//        } else {
-//            log.info("Interceptor：跳转到login页面！");
-//            request.getRequestDispatcher(CommonController.URL_GOTO_LOGIN_PAGE).forward(request, response);
-//            return false;
-//        }
-    }
-
-    private boolean checkTrans(String url, Map<String, String> userAllTrans) {
-        String subTrans = "";
-        if (!"/".equals(url)) {
-            subTrans = url.substring(0, url.lastIndexOf(".do"));
-        } else {
-            return true;
-        }
-
-        if (userAllTrans == null) {
-            return false;
-        }
-        return userAllTrans.containsKey(subTrans);
-    }
-
-    /**
-     * 在业务处理器处理请求执行完成后,生成视图之前执行的动作
-     * 可在modelAndView中加入数据，比如当前时间
-     */
-    @Override
-    public void postHandle(HttpServletRequest request,
-                           HttpServletResponse response, Object handler,
-                           ModelAndView modelAndView) throws Exception {
-        log.info("==============执行顺序: 2、postHandle================");
-    }
-
-    /**
-     * 在DispatcherServlet完全处理完请求后被调用,可用于清理资源等
-     * <p>
-     * 当有拦截器抛出异常时,会从当前拦截器往回执行所有的拦截器的afterCompletion()
-     */
-    @Override
-    public void afterCompletion(HttpServletRequest request,
-                                HttpServletResponse response, Object handler, Exception ex)
-            throws Exception {
-        log.info("==============执行顺序: 3、afterCompletion================");
+//        return rtn;
     }
 }

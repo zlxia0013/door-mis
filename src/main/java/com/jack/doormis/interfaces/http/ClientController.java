@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 @Controller
+@RequestMapping(value = "/client")
 public class ClientController {
 	protected Logger				log	= Logger.getLogger(this.getClass());
 	
@@ -27,7 +28,7 @@ public class ClientController {
 	 * 跳转到表格页面
 	 * @return
 	 */
-	@RequestMapping(value = "/client/goto_main_page",method = RequestMethod.GET)
+	@RequestMapping(value = "/goto_main_page",method = RequestMethod.GET)
     public ModelAndView gotoMainPage() {
         ModelAndView modelAndView = new ModelAndView("client/client_main");
         return modelAndView;
@@ -38,7 +39,7 @@ public class ClientController {
 	 * @return
 	 */
 	@ResponseBody
-	@RequestMapping(value = "/client/add",method = RequestMethod.POST)
+	@RequestMapping(value = "/add",method = RequestMethod.POST)
     public Json add(Client client) {
         Json json = new Json();
         try {
@@ -63,7 +64,7 @@ public class ClientController {
      * @return
      */
 	@ResponseBody
-    @RequestMapping(value = "/client/update",method = RequestMethod.POST)
+    @RequestMapping(value = "/update",method = RequestMethod.POST)
     public Json update(Client client) {
         Json json = new Json();
         try {

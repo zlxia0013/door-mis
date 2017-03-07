@@ -1,6 +1,7 @@
 package com.jack.doormis.core.client.bo;
 
 import com.jack.doormis.core.client.dao.ClientDao;
+import com.jack.doormis.core.client.dto.ClientMainPageParams;
 import com.jack.doormis.core.client.pojo.Client;
 import com.jack.doormis.core.user.pojo.User;
 import com.jack.doormis.util.StringUtil;
@@ -29,8 +30,12 @@ public class ClientBo {
         return clientDao.search(client);
     }
 
-    public List<Client> searchPaged(Client client) {
-        return clientDao.searchPaged(client);
+    public List<Client> searchMainList(ClientMainPageParams pageParams) {
+        return clientDao.searchMainList(pageParams);
+    }
+
+    public Integer searchMainCount(ClientMainPageParams pageParams) {
+        return clientDao.searchMainCount(pageParams);
     }
 
     public Long searchCnt(Client client) {
@@ -104,4 +109,5 @@ public class ClientBo {
     public void delete(Client client) {
         clientDao.delete(client);
     }
+
 }

@@ -44,15 +44,24 @@
 		WHERE 1=1 
 	</select>
 
-	<select id="searchPaged" parameterType="com.jack.doormis.core.client.pojo.Client" resultType="com.jack.doormis.core.client.pojo.Client">
+	<select id="searchMainList" parameterType="com.jack.doormis.core.client.dto.ClientMainPageParams" resultType="com.jack.doormis.core.client.pojo.Client">
 		SELECT 
 	 		<include refid="Base_Column_List" />
 	    FROM 
 			t_client t 
-		WHERE 1=1 
+		WHERE 1=1
+		LIMIT #{firstRecord}, #{pageSize}
 	</select>
 
-	<select id="searchCnt" parameterType="com.jack.doormis.core.client.pojo.Client" resultType="java.lang.Integer">
+	<select id="searchMainCount" parameterType="com.jack.doormis.core.client.dto.ClientMainPageParams" resultType="Integer">
+		SELECT
+			COUNT(*)
+		FROM
+			t_client t
+		WHERE 1=1
+	</select>
+
+	<select id="searchCnt" parameterType="com.jack.doormis.core.client.pojo.Client" resultType="Integer">
 		SELECT 
 	 		count(1) 
 	    FROM 

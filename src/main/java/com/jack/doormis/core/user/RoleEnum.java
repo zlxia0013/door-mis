@@ -14,4 +14,12 @@ public enum RoleEnum {
             return false;
         }
     }
+
+    public static boolean isEmpl(String role){
+        return RoleEnum.valueOf(role) == EMPL;
+    }
+
+    public static boolean isAdmin(String role){
+        return RoleEnum.valueOf(role) == ADMIN;
+    }
 }

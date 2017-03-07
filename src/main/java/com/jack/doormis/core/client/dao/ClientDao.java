@@ -1,6 +1,7 @@
 package com.jack.doormis.core.client.dao;
 
 
+import com.jack.doormis.core.client.dto.ClientMainPageParams;
 import com.jack.doormis.core.client.pojo.Client;
 import org.apache.ibatis.annotations.Param;
 
@@ -11,7 +12,9 @@ public interface ClientDao {
 
     List<Client> search(Client client);
 
-    List<Client> searchPaged(Client client);
+    List<Client> searchMainList(ClientMainPageParams pageParams);
+
+    Integer searchMainCount(ClientMainPageParams pageParams);
 
     Long searchCnt(Client client);
 
@@ -22,4 +25,5 @@ public interface ClientDao {
     void delete(Client client);
 
     Client getByRealName(String realName);
+
 }

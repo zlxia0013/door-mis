@@ -1,4 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="com.jack.doormis.core.client.dto.ClientMainPageModel" %>
+<%@ page import="com.jack.doormis.common.web.ClientKeys" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.jack.doormis.core.client.pojo.Client" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +12,7 @@
 
     <%
         String path = request.getContextPath();
-        path = "/".equals(path)?"":path;
+        path = "/".equals(path) ? "" : path;
         request.setAttribute("path", path);
     %>
     <script type="text/javascript">
@@ -61,27 +65,34 @@
                     <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Name</th>
-                        <th>E-mail</th>
-                        <th>Phone</th>
-                        <th>City</th>
-                        <th>Role</th>
-                        <th>Status</th>
-                        <th></th>
+                        <th>姓名</th>
+                        <th>编号</th>
+                        <th>电话</th>
+                        <th>地址</th>
+                        <th>微信号</th>
+                        <th>货运部</th>
+                        <th>备注</th>
                     </tr>
                     </thead>
                     <tbody>
+                    <%
+                        ClientMainPageModel model = (ClientMainPageModel) request.getAttribute(ClientKeys.JspParam_ClientMainPageModel);
+                        List<Client> clientList = model.getClientList();
+                        for (Client client : clientList) {
+                    %>
                     <tr class="list-users">
-                        <td>1</td>
-                        <td>Admin</td>
-                        <td>travis@provider.com</td>
-                        <td>xxx-xxx-xxxx</td>
-                        <td>My City</td>
-                        <td>Admin</td>
-                        <td><span class="label label-success">Active</span></td>
+                        <td><%=client.getId()%></td>
+                        <td><%=client.getRealName()%></td>
+                        <td><%=client.getCode()%></td>
+                        <td><%=client.getPhone()%></td>
+                        <td><%=client.getAddress()%></td>
+                        <td><%=client.getWechat()%></td>
+                        <td><%=client.getLogistics()%></td>
+                        <td><%=client.getRemark()%></td>
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span
+                                        class="caret"></span></a>
                                 <ul class="dropdown-menu">
                                     <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
                                     <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
@@ -94,29 +105,11 @@
                             </div>
                         </td>
                     </tr>
-                    <tr class="list-users">
-                        <td>2</td>
-                        <td>Jose E. Jones</td>
-                        <td>joseejones@provider.com</td>
-                        <td>801-xxx-xxxx</td>
-                        <td>Morgan, UT</td>
-                        <td>Moderator</td>
-                        <td><span class="label label-success">Active</span></td>
-                        <td>
-                            <div class="btn-group">
-                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
-                                    <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-                                    <li><a href="#"><i class="icon-user"></i> Details</a></li>
-                                    <li class="nav-header">Permissions</li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>Admin</strong></a></li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>Moderator</strong></a></li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>User</strong></a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+
+                    <%
+                        }
+                    %>
+
                     </tbody>
                 </table>
                 <div class="pagination">
@@ -146,17 +139,16 @@
 <script type="text/javascript" src="${path}/js/jquery.js"></script>
 <script type="text/javascript" src="${path}/js/bootstrap.min.js"></script>
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $('.dropdown-menu li a').hover(
-            function() {
+            function () {
                 $(this).children('i').addClass('icon-white');
             },
-            function() {
+            function () {
                 $(this).children('i').removeClass('icon-white');
             });
 
-        if($(window).width() > 760)
-        {
+        if ($(window).width() > 760) {
             $('tr.list-users td div ul').addClass('pull-right');
         }
     });

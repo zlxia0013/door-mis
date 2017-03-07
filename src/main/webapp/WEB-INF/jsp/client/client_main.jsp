@@ -72,6 +72,7 @@
                         <th>微信号</th>
                         <th>货运部</th>
                         <th>备注</th>
+                        <th></th>
                     </tr>
                     </thead>
                     <tbody>

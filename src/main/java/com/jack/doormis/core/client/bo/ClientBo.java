@@ -94,8 +94,8 @@ public class ClientBo {
         }
 
         //////////////////
+        Client client1 = getByRealName(client.getRealName());
         if (isAdd) {
-            Client client1 = getByRealName(client.getRealName());
             if (client1 != null) {
                 throw new DoorMisRuntimeException("客户姓名已存在，请重新输入");
             }
@@ -103,11 +103,15 @@ public class ClientBo {
             if (client.getId() == null) {
                 throw new DoorMisRuntimeException("客户id不能为空");
             }
+
+            if (client1!=null && client1.getId()!=client.getId().intValue()){
+                throw new DoorMisRuntimeException("客户姓名已存在，请重新输入");
+            }
         }
     }
 
-    public void delete(Client client) {
-        clientDao.delete(client);
+    public void delete(Integer clientId) {
+        clientDao.delete(clientId);
     }
 
 }

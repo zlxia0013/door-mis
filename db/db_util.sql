@@ -1,4 +1,3 @@
---insert role authority of admin
 DELETE FROM t_role_authority
 WHERE role = 'ADMIN';
 

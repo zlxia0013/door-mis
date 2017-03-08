@@ -3,7 +3,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>新增客户</title>
+    <title>修改客户信息</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <%
@@ -55,54 +55,54 @@
         <div class="span9">
             <div class="row-fluid">
                 <div class="page-header">
-                    <h1>新增客户</h1>
+                    <h1>修改客户信息</h1>
                 </div>
                 <form class="form-horizontal">
                     <fieldset>
                         <div class="control-group">
                             <label class="control-label" for="realName">姓名</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="realName"/>
+                                <input type="text" class="input-xlarge" id="realName" value="${clientInfo.realName}"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="code">编号</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="code"/>
+                                <input type="text" class="input-xlarge" id="code" value="${clientInfo.code}"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="phone">电话</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="phone"/>
+                                <input type="text" class="input-xlarge" id="phone" value="${clientInfo.phone}"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="address">地址</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="address"/>
+                                <input type="text" class="input-xlarge" id="address" value="${clientInfo.address}"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="wechat">微信号</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="wechat"/>
+                                <input type="text" class="input-xlarge" id="wechat" value="${clientInfo.wechat}"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="logistics">货运部</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="logistics"/>
+                                <input type="text" class="input-xlarge" id="logistics" value="${clientInfo.logistics}"/>
                             </div>
                         </div>
                         <div class="control-group">
                             <label class="control-label" for="remark">备注</label>
                             <div class="controls">
-                                <input type="text" class="input-xlarge" id="remark"/>
+                                <input type="text" class="input-xlarge" id="remark" value="${clientInfo.remark}"/>
                             </div>
                         </div>
                         <div class="form-actions">
-                            <input type="button" class="btn btn-success btn-large"  onclick="add()" value="保  存"/>
+                            <input type="button" class="btn btn-success btn-large"  onclick="update()" value="保  存"/>
                         </div>
                     </fieldset>
                 </form>
@@ -122,7 +122,7 @@
 <script type="text/javascript" src="${path}/js/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-    function add(){
+    function update(){
         var realName = $.trim($("#realName").val());
         if(realName == ""){
             alert("请输入姓名");
@@ -152,9 +152,10 @@
         var remark = $.trim($("#remark").val());
 
         $.ajax({
-            url:"${path}/client/add",
+            url:"${path}/client/update",
             type:"post",
             data:{
+                id:${clientInfo.id},
                 realName:realName,
                 code:code,
                 phone:phone,

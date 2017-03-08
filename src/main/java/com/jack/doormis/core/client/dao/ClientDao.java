@@ -22,7 +22,7 @@ public interface ClientDao {
 
     void update(Client client);
 
-    void delete(Client client);
+    void delete(Integer clientId);
 
     Client getByRealName(String realName);
 

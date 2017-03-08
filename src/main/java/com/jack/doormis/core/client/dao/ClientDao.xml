@@ -107,8 +107,8 @@
 		UPDATE
 	 		t_client
 		<set> 
-	        <if test="verNbr != null" >ver_nbr = #{verNbr},</if>
-	        <if test="realName != null" >real_name = #{realName},</if>
+	        ver_nbr = ver_nbr+1,
+			<if test="realName != null" >real_name = #{realName},</if>
 	        <if test="code != null" >code = #{code},</if>
 	        <if test="phone != null" >phone = #{phone},</if>
 	        <if test="address != null" >address = #{address},</if>
@@ -125,11 +125,11 @@
 	        id = #{id}
 	</update>
 
-	<delete id="delete" parameterType="com.jack.doormis.core.client.pojo.Client">
+	<delete id="delete" parameterType="Integer">
 		DELETE FROM 
 			t_client
 	    WHERE 
-	        id = #{id}
+	        id = #{clientId}
 	</delete>
 	
 </mapper>

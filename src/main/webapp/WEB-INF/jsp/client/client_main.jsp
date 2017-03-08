@@ -92,16 +92,11 @@
                         <td><%=client.getRemark()%></td>
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">操作<span
                                         class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
-                                    <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-                                    <li><a href="#"><i class="icon-user"></i> Details</a></li>
-                                    <li class="nav-header">Permissions</li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>Admin</strong></a></li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>Moderator</strong></a></li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>User</strong></a></li>
+                                    <li><a href="${path}/client/goto_update_page?clientId=<%=client.getId()%>"><i class="icon-pencil"></i> 修改</a></li>
+                                    <li><a href="javascript:void(0)" onclick="deleteClient(<%=client.getId()%>)"><i class="icon-trash"></i> 删除</a></li>
                                 </ul>
                             </div>
                         </td>
@@ -153,6 +148,33 @@
             $('tr.list-users td div ul').addClass('pull-right');
         }
     });
+
+    function deleteClient(clientId){
+        var r=confirm("你确定要删除吗？")
+        if (r==false)
+        {
+            return;
+        }
+
+        $.ajax({
+            url:"${path}/client/delete",
+            type:"post",
+            data:{
+                clientId:clientId
+            },
+            success:function(result){
+                var re = JSON.parse(result);
+                if(re.returnCode=="0"){
+                    window.location.reload();
+                }else{
+                    alert(re.msg);
+                }
+            },
+            error:function(request) {      // 设置表单提交出错
+                alert(request);  //登录错误提示信息
+            }
+        });
+    }
 </script>
 </body>
 </html>

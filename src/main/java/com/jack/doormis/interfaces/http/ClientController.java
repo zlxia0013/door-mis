@@ -71,11 +71,6 @@ public class ClientController {
         return modelAndView;
     }
 
-    /**
-     * 新增
-     *
-     * @return
-     */
     @ResponseBody
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     public Json add(Client client, HttpSession session) {
@@ -98,18 +93,44 @@ public class ClientController {
         return json;
     }
 
-    /**
-     * 修改
-     *
-     * @param client
-     * @return
-     */
+    @RequestMapping(value = "/goto_update_page", method = RequestMethod.GET)
+    public ModelAndView gotoUpdatePage(Integer clientId, HttpSession session) {
+        User userInfo = (User) session.getAttribute(CommonKeys.SESSION_USER);
+
+        Client client = clientBo.getById(clientId);
+
+        ModelAndView modelAndView = new ModelAndView("client/client_update");
+        modelAndView.addObject(ClientKeys.JspParam_UserInfo, userInfo);
+        modelAndView.addObject(ClientKeys.JspParam_ClientInfo, client);
+        return modelAndView;
+    }
+
     @ResponseBody
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     public Json update(Client client) {
         Json json = new Json();
         try {
             clientBo.update(client);
+            json.setSuccess(true);
+        } catch (DoorMisRuntimeException e) {
+            json = new Json(e.getErrorCode(), e.getMessage());
+        } catch (DoorMisSystemException e) {
+            log.error("error", e);
+            json = new Json(e.getErrorCode(), "系统忙... " + e.getMessage());
+        } catch (Throwable e) {
+            log.error("error", e);
+            json = new Json(ReturnCodes.SYSTEM_EXCEPTION, "系统忙... " + e.getMessage());
+        }
+        return json;
+    }
+
+
+    @ResponseBody
+    @RequestMapping(value = "/delete", method = RequestMethod.POST)
+    public Json delete(Integer clientId) {
+        Json json = new Json();
+        try {
+            clientBo.delete(clientId);
             json.setSuccess(true);
         } catch (DoorMisRuntimeException e) {
             json = new Json(e.getErrorCode(), e.getMessage());

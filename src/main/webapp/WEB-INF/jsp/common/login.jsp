@@ -28,8 +28,8 @@
     <div class="signin">
         <div class="signin-head"><img src="${path}/img/test/head_120.png" alt="" class="img-circle"></div>
         <form class="form-signin">
-            <input id="txtUserName" type="text" class="form-control" placeholder="用户名" required autofocus value="admin"/>
-            <input id="txtPassword" type="password" class="form-control" placeholder="密码" required value="aa" />
+            <input id="txtUserName" type="text" class="form-control" placeholder="用户名" required autofocus value=""/>
+            <input id="txtPassword" type="password" class="form-control" placeholder="密码" required value="" />
             <input type="button" class="btn btn-lg btn-warning btn-block"  onclick="login()" value="登录"></input>
         </form>
     </div>

@@ -121,8 +121,12 @@ public class UserController {
     }
 
     @RequestMapping(value = "/goto_update_pwd_page",method = RequestMethod.GET)
-    public String gotoUpdatePwdPage() {
-        return"user/user_update_pwd";
+    public ModelAndView gotoUpdatePwdPage(HttpSession session) {
+        User userInfo = (User) session.getAttribute(CommonKeys.SESSION_USER);
+
+        ModelAndView modelAndView = new ModelAndView("user/user_update_pwd");
+        modelAndView.addObject(JspKeys.JspParam_SessionUserInfo, userInfo);
+        return modelAndView;
     }
 
     @ResponseBody

@@ -1,3 +1,6 @@
+<%@ page import="com.jack.doormis.core.user.pojo.User" %>
+<%@ page import="com.jack.doormis.common.web.JspKeys" %>
+<%@ page import="com.jack.doormis.core.user.RoleEnum" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html lang="en">
@@ -37,6 +40,10 @@
     </div>
 </div>
 
+<%
+    User sessionUserInfo = (User) request.getAttribute(JspKeys.JspParam_SessionUserInfo);
+%>
+
 <div class="container-fluid">
     <div class="row-fluid">
         <div class="span3">
@@ -44,7 +51,16 @@
                 <ul class="nav nav-list">
                     <li class="nav-header"><i class="icon-wrench"></i> Administration</li>
                     <li class="active"><a href="${path}/client/goto_main_page">客户管理</a></li>
+
+                    <%
+                        if(RoleEnum.ADMIN.toString().equals(sessionUserInfo.getRole()))
+                        {
+
+                    %>
                     <li><a href="${path}/user/goto_main_page">用户管理</a></li>
+                    <%
+                        }
+                    %>
 
                     <li class="nav-header"><i class="icon-user"></i> Profile</li>
                     <li><a href="${path}/user/goto_update_pwd_page">修改密码</a></li>

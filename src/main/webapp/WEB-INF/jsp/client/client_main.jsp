@@ -114,6 +114,11 @@
                         <td><%=client.getLogistics()%></td>
                         <td><%=client.getRemark()%></td>
                         <td>
+
+                            <%
+                            if(RoleEnum.ADMIN.toString().equals(sessionUserInfo.getRole()))
+                            {
+                            %>
                             <div class="btn-group">
                                 <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">操作<span
                                         class="caret"></span></a>
@@ -122,6 +127,9 @@
                                     <li><a href="javascript:void(0)" onclick="deleteClient(<%=client.getId()%>)"><i class="icon-trash"></i> 删除</a></li>
                                 </ul>
                             </div>
+                            <%
+                                }
+                            %>
                         </td>
                     </tr>
 

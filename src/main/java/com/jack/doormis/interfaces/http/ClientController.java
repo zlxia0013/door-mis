@@ -59,6 +59,7 @@ public class ClientController {
         ModelAndView modelAndView = new ModelAndView("client/client_main");
         modelAndView.addObject(ClientKeys.JspParam_UserInfo, userInfo);
         modelAndView.addObject(ClientKeys.JspParam_ClientMainPageModel, model);
+        modelAndView.addObject(ClientKeys.JspParam_ClientMainPageParams, pageParams);
         return modelAndView;
     }
 

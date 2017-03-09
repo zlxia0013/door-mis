@@ -61,6 +61,14 @@
                 <div class="page-header">
                     <h1>客户管理</h1>
                 </div>
+                <div class="control-group">
+                    编号：<input type="text" class="input-xlarge" id="code" value="${clientMainPageParams.code}"/>
+                    姓名：<input type="text" class="input-xlarge" id="realName" value="${clientMainPageParams.realName}"/>
+                    地址：<input type="text" class="input-xlarge" id="address" value="${clientMainPageParams.address}"/>
+                    电话：<input type="text" class="input-xlarge" id="phone" value="${clientMainPageParams.phone}"/>
+                    微信号：<input type="text" class="input-xlarge" id="wechat" value="${clientMainPageParams.wechat}"/>
+                    <input type="button" class="btn btn-success btn-large"  onclick="search()" value="搜  索"/>
+                </div>
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <tr>
@@ -110,12 +118,16 @@
                 </table>
                 <div class="pagination">
                     <ul>
-                        <li><a href="#">Prev</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">Next</a></li>
+                        <%
+                            for(int i=1; i<=model.getPageCount(); i++)
+                            {
+                        %>
+                                <li <%if(model.getCurPage()==i){%>class="active"<%}%>>
+                                    <a href="javascript:void(0)" onclick="gotoPage(<%=i%>)"><%=i%></a>
+                                </li>
+                        <%
+                            }
+                        %>
                     </ul>
                 </div>
                 <a href="${path}/client/goto_add_page" class="btn btn-success">新增</a>
@@ -174,6 +186,14 @@
                 alert(request);  //登录错误提示信息
             }
         });
+    }
+
+    function search(){
+        gotoPage(1);
+    }
+
+    function gotoPage(curPage){
+        window.location.href="${path}/client/goto_main_page?pageSize=20&curPage="+curPage+"&code="+$.trim($("#code").val())+"&realName="+$.trim($("#realName").val())+"&address="+$.trim($("#address").val())+"&phone="+$.trim($("#phone").val())+"&wechat="+$.trim($("#wechat").val());
     }
 </script>
 </body>

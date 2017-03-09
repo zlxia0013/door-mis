@@ -11,6 +11,12 @@ public class ClientMainPageParams {
     private Integer curPage;
     private Integer firstRecord;
 
+    private String code;
+    private String realName;
+    private String address;
+    private String phone;
+    private String wechat;
+
     public ClientMainPageParams() {
     }
 
@@ -63,5 +69,43 @@ public class ClientMainPageParams {
         this.firstRecord = firstRecord;
     }
 
+    public String getCode() {
+        return code;
+    }
 
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getRealName() {
+        return realName;
+    }
+
+    public void setRealName(String realName) {
+        this.realName = realName;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getWechat() {
+        return wechat;
+    }
+
+    public void setWechat(String wechat) {
+        this.wechat = wechat;
+    }
 }

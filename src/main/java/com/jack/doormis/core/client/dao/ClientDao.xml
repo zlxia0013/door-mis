@@ -50,6 +50,21 @@
 	    FROM 
 			t_client t 
 		WHERE 1=1
+		<if test="code != null and code != ''">
+			AND t.code like concat('%',#{code},'%')
+		</if>
+		<if test="realName != null and realName != ''">
+			AND t.real_name like concat('%',#{realName},'%')
+		</if>
+		<if test="address != null and address != ''">
+			AND t.address like concat('%',#{address},'%')
+		</if>
+		<if test="phone != null and phone != ''">
+			AND t.phone like concat('%',#{phone},'%')
+		</if>
+		<if test="wechat != null and wechat != ''">
+			AND t.wechat like concat('%',#{wechat},'%')
+		</if>
 		LIMIT #{firstRecord}, #{pageSize}
 	</select>
 
@@ -59,6 +74,21 @@
 		FROM
 			t_client t
 		WHERE 1=1
+		<if test="code != null and code != ''">
+			AND t.code like concat('%',#{code},'%')
+		</if>
+		<if test="realName != null and realName != ''">
+			AND t.real_name like concat('%',#{realName},'%')
+		</if>
+		<if test="address != null and address != ''">
+			AND t.address like concat('%',#{address},'%')
+		</if>
+		<if test="phone != null and phone != ''">
+			AND t.phone like concat('%',#{phone},'%')
+		</if>
+		<if test="wechat != null and wechat != ''">
+			AND t.wechat like concat('%',#{wechat},'%')
+		</if>
 	</select>
 
 	<select id="searchCnt" parameterType="com.jack.doormis.core.client.pojo.Client" resultType="Integer">

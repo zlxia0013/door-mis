@@ -1,6 +1,7 @@
 package com.jack.doormis.core.user.dao;
 
 
+import com.jack.doormis.core.user.dto.UserMainPageParams;
 import com.jack.doormis.core.user.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -21,7 +22,11 @@ public interface UserDao {
 
     void update(User user);
 
-    void delete(User user);
+    void delete(Integer userId);
 
     List<String> searchAllRoles();
+
+    List<User> searchMainList(UserMainPageParams pageParams);
+
+    Integer searchMainCount(UserMainPageParams pageParams);
 }

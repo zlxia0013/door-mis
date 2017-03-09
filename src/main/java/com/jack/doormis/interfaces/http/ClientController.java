@@ -1,7 +1,7 @@
 package com.jack.doormis.interfaces.http;
 
 
-import com.jack.doormis.common.web.ClientKeys;
+import com.jack.doormis.common.web.JspKeys;
 import com.jack.doormis.common.web.Json;
 import com.jack.doormis.common.web.CommonKeys;
 import com.jack.doormis.core.client.bo.ClientBo;
@@ -57,9 +57,9 @@ public class ClientController {
         model.setPageSize(pageParams.getPageSize());
 
         ModelAndView modelAndView = new ModelAndView("client/client_main");
-        modelAndView.addObject(ClientKeys.JspParam_UserInfo, userInfo);
-        modelAndView.addObject(ClientKeys.JspParam_ClientMainPageModel, model);
-        modelAndView.addObject(ClientKeys.JspParam_ClientMainPageParams, pageParams);
+        modelAndView.addObject(JspKeys.JspParam_SessionUserInfo, userInfo);
+        modelAndView.addObject(JspKeys.JspParam_ClientMainPageModel, model);
+        modelAndView.addObject(JspKeys.JspParam_ClientMainPageParams, pageParams);
         return modelAndView;
     }
 
@@ -68,7 +68,7 @@ public class ClientController {
         User userInfo = (User) session.getAttribute(CommonKeys.SESSION_USER);
 
         ModelAndView modelAndView = new ModelAndView("client/client_add");
-        modelAndView.addObject(ClientKeys.JspParam_UserInfo, userInfo);
+        modelAndView.addObject(JspKeys.JspParam_SessionUserInfo, userInfo);
         return modelAndView;
     }
 
@@ -101,8 +101,8 @@ public class ClientController {
         Client client = clientBo.getById(clientId);
 
         ModelAndView modelAndView = new ModelAndView("client/client_update");
-        modelAndView.addObject(ClientKeys.JspParam_UserInfo, userInfo);
-        modelAndView.addObject(ClientKeys.JspParam_ClientInfo, client);
+        modelAndView.addObject(JspKeys.JspParam_SessionUserInfo, userInfo);
+        modelAndView.addObject(JspKeys.JspParam_ClientInfo, client);
         return modelAndView;
     }
 

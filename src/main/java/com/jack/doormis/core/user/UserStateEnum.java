@@ -39,6 +39,16 @@ public enum UserStateEnum {
         }
     }
 
+    public static String getLabel(int stateId){
+        switch (stateId){
+            case 0:
+                return "禁用";
+            case 1:
+                return "活动";
+        }
+        return "";
+    }
+
     public int getStateId() {
         return stateId;
     }

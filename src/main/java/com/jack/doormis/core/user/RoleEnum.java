@@ -22,4 +22,15 @@ public enum RoleEnum {
     public static boolean isAdmin(String role){
         return RoleEnum.valueOf(role) == ADMIN;
     }
+
+    public static String getLabel(String roleStr){
+        RoleEnum role = RoleEnum.valueOf(roleStr);
+        switch (role){
+            case ADMIN:
+                return "管理员";
+            case EMPL:
+                return "管理员";
+        }
+        return "";
+    }
 }

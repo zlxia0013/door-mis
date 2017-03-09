@@ -4,7 +4,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>新增客户</title>
+    <title>新增用户</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <%
@@ -33,7 +33,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="#">${userInfo.userName}-${userInfo.role}-${userInfo.realName}</a>
+            <a class="brand" href="#">${sessionUserInfo.userName}-${sessionUserInfo.role}-${sessionUserInfo.realName}</a>
         </div>
     </div>
 </div>

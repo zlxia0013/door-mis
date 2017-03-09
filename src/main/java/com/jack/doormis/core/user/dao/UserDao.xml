@@ -95,7 +95,7 @@
 		UPDATE
 	 		t_user
 		<set> 
-	        <if test="verNbr != null" >ver_nbr = #{verNbr},</if>
+	        ver_nbr = ver_nbr+1,
 	        <if test="userName != null" >user_name = #{userName},</if>
 	        <if test="pwd != null" >pwd = #{pwd},</if>
 	        <if test="role != null" >role = #{role},</if>
@@ -112,7 +112,7 @@
 	        id = #{id}
 	</update>
 
-	<delete id="delete" parameterType="com.jack.doormis.core.user.pojo.User">
+	<delete id="delete" parameterType="Integer">
 		DELETE FROM 
 			t_user
 	    WHERE 
@@ -125,5 +125,20 @@
 		FROM
 		t_user t
 	</select>
-	
+
+
+	<select id="searchMainList" parameterType="com.jack.doormis.core.client.dto.ClientMainPageParams" resultType="com.jack.doormis.core.user.pojo.User">
+		SELECT
+		<include refid="Base_Column_List" />
+		FROM
+		t_user t
+		LIMIT #{firstRecord}, #{pageSize}
+	</select>
+
+	<select id="searchMainCount" parameterType="com.jack.doormis.core.client.dto.ClientMainPageParams" resultType="Integer">
+		SELECT
+		COUNT(*)
+		FROM
+		t_user t
+	</select>
 </mapper>

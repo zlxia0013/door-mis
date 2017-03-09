@@ -1,3 +1,9 @@
+<%@ page import="com.jack.doormis.core.user.dto.UserMainPageModel" %>
+<%@ page import="com.jack.doormis.common.web.JspKeys" %>
+<%@ page import="com.jack.doormis.core.user.pojo.User" %>
+<%@ page import="java.util.List" %>
+<%@ page import="com.jack.doormis.core.user.RoleEnum" %>
+<%@ page import="com.jack.doormis.core.user.UserStateEnum" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -32,7 +38,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="#">${userInfo.userName}-${userInfo.role}-${userInfo.realName}</a>
+            <a class="brand" href="#">${sessionUserInfo.userName}-${sessionUserInfo.role}-${sessionUserInfo.realName}</a>
         </div>
     </div>
 </div>
@@ -60,73 +66,56 @@
                 <table class="table table-striped table-bordered table-condensed">
                     <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>Name</th>
-                        <th>E-mail</th>
-                        <th>Phone</th>
-                        <th>City</th>
-                        <th>Role</th>
-                        <th>Status</th>
+                        <th>用户名</th>
+                        <th>姓名</th>
+                        <th>角色</th>
+                        <th>电话</th>
+                        <th>状态</th>
+                        <th>备注</th>
                         <th></th>
                     </tr>
                     </thead>
                     <tbody>
+                    <%
+                        UserMainPageModel model = (UserMainPageModel) request.getAttribute(JspKeys.JspParam_UserMainPageModel);
+                        List<User> userList = model.getUserList();
+                        for (User user : userList) {
+                    %>
                     <tr class="list-users">
-                        <td>1</td>
-                        <td>Admin</td>
-                        <td>travis@provider.com</td>
-                        <td>xxx-xxx-xxxx</td>
-                        <td>My City</td>
-                        <td>Admin</td>
-                        <td><span class="label label-success">Active</span></td>
+                        <td><%=user.getUserName()%></td>
+                        <td><%=user.getRealName()%></td>
+                        <td><%=RoleEnum.getLabel(user.getRole())%></td>
+                        <td><%=user.getPhone()%></td>
+                        <td><%=UserStateEnum.getLabel(user.getStateId())%></td>
+                        <td><%=user.getRemark()%></td>
                         <td>
                             <div class="btn-group">
-                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
+                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">操作<span
+                                        class="caret"></span></a>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
-                                    <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-                                    <li><a href="#"><i class="icon-user"></i> Details</a></li>
-                                    <li class="nav-header">Permissions</li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>Admin</strong></a></li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>Moderator</strong></a></li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>User</strong></a></li>
+                                    <li><a href="${path}/user/goto_update_page?userId=<%=user.getId()%>"><i class="icon-pencil"></i> 修改</a></li>
+                                    <li><a href="javascript:void(0)" onclick="deleteUser(<%=user.getId()%>)"><i class="icon-trash"></i> 删除</a></li>
                                 </ul>
                             </div>
                         </td>
                     </tr>
-                    <tr class="list-users">
-                        <td>2</td>
-                        <td>Jose E. Jones</td>
-                        <td>joseejones@provider.com</td>
-                        <td>801-xxx-xxxx</td>
-                        <td>Morgan, UT</td>
-                        <td>Moderator</td>
-                        <td><span class="label label-success">Active</span></td>
-                        <td>
-                            <div class="btn-group">
-                                <a class="btn btn-mini dropdown-toggle" data-toggle="dropdown" href="#">Actions <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <li><a href="#"><i class="icon-pencil"></i> Edit</a></li>
-                                    <li><a href="#"><i class="icon-trash"></i> Delete</a></li>
-                                    <li><a href="#"><i class="icon-user"></i> Details</a></li>
-                                    <li class="nav-header">Permissions</li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>Admin</strong></a></li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>Moderator</strong></a></li>
-                                    <li><a href="#"><i class="icon-lock"></i> Make <strong>User</strong></a></li>
-                                </ul>
-                            </div>
-                        </td>
-                    </tr>
+                    <%
+                        }
+                    %>
                     </tbody>
                 </table>
                 <div class="pagination">
                     <ul>
-                        <li><a href="#">Prev</a></li>
-                        <li class="active"><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">Next</a></li>
+                        <%
+                            for(int i=1; i<=model.getPageCount(); i++)
+                            {
+                        %>
+                        <li <%if(model.getCurPage()==i){%>class="active"<%}%>>
+                            <a href="javascript:void(0)" onclick="gotoPage(<%=i%>)"><%=i%></a>
+                        </li>
+                        <%
+                            }
+                        %>
                     </ul>
                 </div>
                 <a href="${path}/user/goto_add_page" class="btn btn-success">新增</a>
@@ -160,6 +149,38 @@
             $('tr.list-users td div ul').addClass('pull-right');
         }
     });
+
+
+    function deleteUser(userId){
+        var r=confirm("你确定要删除吗？")
+        if (r==false)
+        {
+            return;
+        }
+
+        $.ajax({
+            url:"${path}/user/delete",
+            type:"post",
+            data:{
+                userId:userId
+            },
+            success:function(result){
+                var re = JSON.parse(result);
+                if(re.returnCode=="0"){
+                    window.location.reload();
+                }else{
+                    alert(re.msg);
+                }
+            },
+            error:function(request) {      // 设置表单提交出错
+                alert(request);  //登录错误提示信息
+            }
+        });
+    }
+
+    function gotoPage(curPage){
+        window.location.href="${path}/user/goto_main_page?pageSize=20&curPage="+curPage;
+    }
 </script>
 </body>
 </html>

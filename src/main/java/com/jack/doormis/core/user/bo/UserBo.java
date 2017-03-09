@@ -2,8 +2,10 @@ package com.jack.doormis.core.user.bo;
 
 
 import com.jack.doormis.core.user.RoleEnum;
+import com.jack.doormis.core.user.SuperUserName;
 import com.jack.doormis.core.user.UserStateEnum;
 import com.jack.doormis.core.user.dao.UserDao;
+import com.jack.doormis.core.user.dto.UserMainPageParams;
 import com.jack.doormis.core.user.pojo.User;
 import com.jack.doormis.util.StringUtil;
 import com.jack.doormis.util.exception.DoorMisRuntimeException;
@@ -85,8 +87,8 @@ public class UserBo {
         }
 
         //////////////////
+        User user1 = getByUserName(user.getUserName());
         if (isAdd) {
-            User user1 = getByUserName(user.getUserName());
             if (user1 != null) {
                 throw new DoorMisRuntimeException("用户名已存在，请重新输入");
             }
@@ -94,11 +96,24 @@ public class UserBo {
             if (user.getId() == null) {
                 throw new DoorMisRuntimeException("用户id不能为空");
             }
+
+            if (user1!=null && user1.getId()!=user.getId().intValue()){
+                throw new DoorMisRuntimeException("用户名已存在，请重新输入");
+            }
         }
     }
 
-    public void delete(User user) {
-        userDao.delete(user);
+    public void delete(Integer userId) {
+        User user = getById(userId);
+        if (user == null){
+            return ;
+        }
+
+        if (SuperUserName.ADMIN.equals(user.getUserName())){
+            throw new DoorMisRuntimeException("不能删除超级管理员");
+        }
+
+        userDao.delete(userId);
     }
 
     public User login(String userName, String password) {
@@ -146,5 +161,13 @@ public class UserBo {
         //direct update
         user.setPwd(newPwd);
         userDao.update(user);
+    }
+
+    public List<User> searchMainList(UserMainPageParams pageParams) {
+        return userDao.searchMainList(pageParams);
+    }
+
+    public Integer searchMainCount(UserMainPageParams pageParams) {
+        return userDao.searchMainCount(pageParams);
     }
 }

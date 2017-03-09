@@ -1,5 +1,5 @@
 <%@ page import="com.jack.doormis.core.client.dto.ClientMainPageModel" %>
-<%@ page import="com.jack.doormis.common.web.ClientKeys" %>
+<%@ page import="com.jack.doormis.common.web.JspKeys" %>
 <%@ page import="java.util.List" %>
 <%@ page import="com.jack.doormis.core.client.pojo.Client" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
@@ -36,7 +36,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </a>
-            <a class="brand" href="#">${userInfo.userName}-${userInfo.role}-${userInfo.realName}</a>
+            <a class="brand" href="#">${sessionUserInfo.userName}-${sessionUserInfo.role}-${sessionUserInfo.realName}</a>
         </div>
     </div>
 </div>
@@ -85,7 +85,7 @@
                     </thead>
                     <tbody>
                     <%
-                        ClientMainPageModel model = (ClientMainPageModel) request.getAttribute(ClientKeys.JspParam_ClientMainPageModel);
+                        ClientMainPageModel model = (ClientMainPageModel) request.getAttribute(JspKeys.JspParam_ClientMainPageModel);
                         List<Client> clientList = model.getClientList();
                         for (Client client : clientList) {
                     %>
